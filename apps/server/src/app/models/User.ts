@@ -2,8 +2,10 @@ import { IsEmail } from "class-validator"
 import { Field, ObjectType } from "type-graphql"
 import { TypeormLoader } from "type-graphql-dataloader"
 import { BeforeInsert, BeforeUpdate, Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm"
-import { BaseModel } from "../app/core/BaseModel"
+import { BaseModel } from "../core/BaseModel"
+import { CodeOfPoints } from "./CodeOfPoints"
 import { Move } from "./Move"
+import { SavedRoutine } from "./SavedRoutine"
 import { Session } from "./Session"
 
 @Entity("user_account")
@@ -41,7 +43,37 @@ export class User extends BaseModel {
   @TypeormLoader()
   @Field(() => Move)
   @ManyToOne(() => Move, (move) => move.users)
-  favourtieMove: Promise<Move>
+  favouriteMove: Promise<Move>
+
+  @TypeormLoader()
+  @Field(() => [Move])
+  @OneToMany(() => Move, (move) => move.createdBy)
+  movesCreated: Promise<Move[]>
+
+  @TypeormLoader()
+  @Field(() => [CodeOfPoints])
+  @OneToMany(() => CodeOfPoints, (cop) => cop.createdBy)
+  codeOfPointsCreated: Promise<CodeOfPoints[]>
+
+  @TypeormLoader()
+  @Field(() => [CodeOfPoints])
+  @OneToMany(() => CodeOfPoints, (cop) => cop.updateBy)
+  codeOfPointsUpdated: Promise<CodeOfPoints[]>
+
+  @TypeormLoader()
+  @Field(() => [CodeOfPoints])
+  @OneToMany(() => CodeOfPoints, (cop) => cop.createdBy)
+  apparatusCreated: Promise<CodeOfPoints[]>
+
+  @TypeormLoader()
+  @Field(() => [CodeOfPoints])
+  @OneToMany(() => CodeOfPoints, (cop) => cop.updateBy)
+  apparatusUpdated: Promise<CodeOfPoints[]>
+
+  @TypeormLoader()
+  @Field(() => [SavedRoutine])
+  @OneToMany(() => SavedRoutine, (routine) => routine.user)
+  savedRoutines: Promise<SavedRoutine[]>
 
   @OneToMany(() => Session, (session) => session.user)
   sessions: Promise<Session[]>

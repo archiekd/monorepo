@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn, UpdateDateColumn } from "typeorm"
 import { Field, ObjectType } from "type-graphql"
-import { BaseModel } from "../app/core/BaseModel"
+import { BaseModel } from "../core/BaseModel"
 import { User } from "./User"
 
 @ObjectType()

@@ -1,7 +1,13 @@
 import { Connection, getConnection, createConnection, ConnectionOptions } from "typeorm"
-import { Move } from "../../models/Move"
-import { Session } from "../../models/Session"
-import { User } from "../../models/User"
+import { Apparatus } from "../models/Apparatus"
+import { ApparatusDeduction } from "../models/ApparatusDeduction"
+import { CodeOfPoints } from "../models/CodeOfPoints"
+import { CodeOfPointsGroup } from "../models/CodeOfPointsGroup"
+import { Move } from "../models/Move"
+import { RoutineMove } from "../models/RoutineMove"
+import { SavedRoutine } from "../models/SavedRoutine"
+import { Session } from "../models/Session"
+import { User } from "../models/User"
 
 const rootDir = process.env.NODE_ENV === "development" ? "src" : "dist/src"
 // type EntitiesAndMigrationsOpts = Pick<ConnectionOptions, "entities" | "migrations">
@@ -37,7 +43,7 @@ export const connectPostgres = async (): Promise<Connection> => {
       port: 5432,
       synchronize: process.env.NODE_ENV === "development" ? true : false,
       logging: process.env.NODE_ENV === "development" ? false : false,
-      entities: [Move, Session, User],
+      entities: [Move, Session, User, Apparatus, ApparatusDeduction, CodeOfPoints, CodeOfPointsGroup, RoutineMove, SavedRoutine],
       migrations: [rootDir + "/migrations/*.{js,ts}"],
       subscribers: [rootDir + "/subscribers/**/*.{js,ts}"]
     })

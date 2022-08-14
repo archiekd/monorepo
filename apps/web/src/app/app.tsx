@@ -14,7 +14,7 @@ gql`
   query getMove($id: String!) {
     getMove(id: $id) {
       id
-      name
+      description
     }
   }
 `

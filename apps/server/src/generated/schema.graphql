@@ -1,18 +1,6 @@
 type Query {
+  getCurrentUser: User
   getMove(id: String!): Move!
-}
-
-type Move {
-  id: String!
-  name: String!
-  apparatus: String!
-  pointValue: Float!
-  letterValue: String!
-  copGroup: String!
-  isDoubleRotation: Boolean!
-  users: [User!]!
-  createdAt: DateTime!
-  updatedAt: DateTime!
 }
 
 type User {
@@ -23,9 +11,107 @@ type User {
   googleRefreshToken: String
   perishibleToken: String
   superAdmin: Boolean!
-  favourtieMove: Move!
+  favouriteMove: Move!
+  movesCreated: [Move!]!
+  codeOfPointsCreated: [CodeOfPoints!]!
+  codeOfPointsUpdated: [CodeOfPoints!]!
+  apparatusCreated: [CodeOfPoints!]!
+  apparatusUpdated: [CodeOfPoints!]!
+  savedRoutines: [SavedRoutine!]!
   createdAt: DateTime!
   updatedAt: DateTime!
+}
+
+type Move {
+  id: String!
+  description: String!
+  namedAfter: String
+  otherNames: [String!]!
+  copGroup: CopGroup!
+  copIndex: String!
+  isDoubleRotation: Boolean!
+  apparatus: Apparatus!
+  routineMoves: [SavedRoutine!]!
+  users: [User!]!
+  createdBy: User!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""The COP group that the move is part of"""
+enum CopGroup {
+  I
+  II
+  III
+  IV
+  V
+}
+
+type Apparatus {
+  id: String!
+  name: ApparatusName!
+  description: String!
+  presentationInformation: String!
+  dScoreInformation: String!
+  moves: [Move!]!
+  deduction: ApparatusDeduction!
+  codeOfPoints: CodeOfPoints!
+  createdBy: User!
+  updateBy: User!
+}
+
+"""These are all the apparatus in mens gymnastics"""
+enum ApparatusName {
+  FLOOR
+  POMMEL
+  RINGS
+  VAULT
+  PARALLEL_BARS
+  HIGH_BAR
+}
+
+type ApparatusDeduction {
+  id: String!
+  error: Float!
+  size: ErrorSize!
+  apparatus: Apparatus!
+  pointDeduction: PointDeduction!
+}
+
+"""These are all the sizes that an error can be"""
+enum ErrorSize {
+  SMALL
+  MEDIUM
+  LARGE
+}
+
+"""These are all the point deductions for different errors"""
+enum PointDeduction {
+  ONE
+  THREE
+  FIVE
+  FALL
+}
+
+type CodeOfPoints {
+  id: String!
+  name: FIG!
+  generalInformation: String!
+  apparatus: [Apparatus!]!
+  createdBy: User!
+  updateBy: User!
+}
+
+"""These are all the code of points versions"""
+enum FIG {
+  figMens
+  figWomens
+}
+
+type SavedRoutine {
+  id: String!
+  moves: [Move!]!
+  user: User!
 }
 
 """
@@ -34,14 +120,26 @@ The javascript `Date` as string. Type represents date and time as the ISO Date s
 scalar DateTime
 
 type Mutation {
+  logout: Boolean!
+  login(password: String!, email: String!): User
   createMove(newMoveInput: NewMoveInput!): Move!
 }
 
 input NewMoveInput {
-  name: String!
-  apparatus: String!
-  pointValue: Float!
-  letterValue: String!
-  copGroup: String!
+  description: String!
+  apparatus: ApparatusName!
+  letterValue: MoveValue!
+  copGroup: CopGroup!
   isDoubleRotation: Boolean!
+}
+
+"""The letter value of a move"""
+enum MoveValue {
+  A
+  B
+  C
+  D
+  E
+  F
+  G
 }

@@ -17,23 +17,104 @@ export type Scalars = {
   DateTime: any;
 };
 
+export type Apparatus = {
+  __typename?: 'Apparatus';
+  codeOfPoints: CodeOfPoints;
+  createdBy: User;
+  dScoreInformation: Scalars['String'];
+  deduction: ApparatusDeduction;
+  description: Scalars['String'];
+  id: Scalars['String'];
+  moves: Array<Move>;
+  name: ApparatusName;
+  presentationInformation: Scalars['String'];
+  updateBy: User;
+};
+
+export type ApparatusDeduction = {
+  __typename?: 'ApparatusDeduction';
+  apparatus: Apparatus;
+  error: Scalars['Float'];
+  id: Scalars['String'];
+  pointDeduction: PointDeduction;
+  size: ErrorSize;
+};
+
+/** These are all the apparatus in mens gymnastics */
+export enum ApparatusName {
+  Floor = 'FLOOR',
+  HighBar = 'HIGH_BAR',
+  ParallelBars = 'PARALLEL_BARS',
+  Pommel = 'POMMEL',
+  Rings = 'RINGS',
+  Vault = 'VAULT'
+}
+
+export type CodeOfPoints = {
+  __typename?: 'CodeOfPoints';
+  apparatus: Array<Apparatus>;
+  createdBy: User;
+  generalInformation: Scalars['String'];
+  id: Scalars['String'];
+  name: Fig;
+  updateBy: User;
+};
+
+/** The COP group that the move is part of */
+export enum CopGroup {
+  I = 'I',
+  Ii = 'II',
+  Iii = 'III',
+  Iv = 'IV',
+  V = 'V'
+}
+
+/** These are all the sizes that an error can be */
+export enum ErrorSize {
+  Large = 'LARGE',
+  Medium = 'MEDIUM',
+  Small = 'SMALL'
+}
+
+/** These are all the code of points versions */
+export enum Fig {
+  FigMens = 'figMens',
+  FigWomens = 'figWomens'
+}
+
 export type Move = {
   __typename?: 'Move';
-  apparatus: Scalars['String'];
-  copGroup: Scalars['String'];
+  apparatus: Apparatus;
+  copGroup: CopGroup;
+  copIndex: Scalars['String'];
   createdAt: Scalars['DateTime'];
+  createdBy: User;
+  description: Scalars['String'];
   id: Scalars['String'];
   isDoubleRotation: Scalars['Boolean'];
-  letterValue: Scalars['String'];
-  name: Scalars['String'];
-  pointValue: Scalars['Float'];
+  namedAfter?: Maybe<Scalars['String']>;
+  otherNames: Array<Scalars['String']>;
+  routineMoves: Array<SavedRoutine>;
   updatedAt: Scalars['DateTime'];
   users: Array<User>;
 };
 
+/** The letter value of a move */
+export enum MoveValue {
+  A = 'A',
+  B = 'B',
+  C = 'C',
+  D = 'D',
+  E = 'E',
+  F = 'F',
+  G = 'G'
+}
+
 export type Mutation = {
   __typename?: 'Mutation';
   createMove: Move;
+  login?: Maybe<User>;
+  logout: Scalars['Boolean'];
 };
 
 
@@ -41,17 +122,31 @@ export type MutationCreateMoveArgs = {
   newMoveInput: NewMoveInput;
 };
 
-export type NewMoveInput = {
-  apparatus: Scalars['String'];
-  copGroup: Scalars['String'];
-  isDoubleRotation: Scalars['Boolean'];
-  letterValue: Scalars['String'];
-  name: Scalars['String'];
-  pointValue: Scalars['Float'];
+
+export type MutationLoginArgs = {
+  email: Scalars['String'];
+  password: Scalars['String'];
 };
+
+export type NewMoveInput = {
+  apparatus: ApparatusName;
+  copGroup: CopGroup;
+  description: Scalars['String'];
+  isDoubleRotation: Scalars['Boolean'];
+  letterValue: MoveValue;
+};
+
+/** These are all the point deductions for different errors */
+export enum PointDeduction {
+  Fall = 'FALL',
+  Five = 'FIVE',
+  One = 'ONE',
+  Three = 'THREE'
+}
 
 export type Query = {
   __typename?: 'Query';
+  getCurrentUser?: Maybe<User>;
   getMove: Move;
 };
 
@@ -60,16 +155,29 @@ export type QueryGetMoveArgs = {
   id: Scalars['String'];
 };
 
+export type SavedRoutine = {
+  __typename?: 'SavedRoutine';
+  id: Scalars['String'];
+  moves: Array<Move>;
+  user: User;
+};
+
 export type User = {
   __typename?: 'User';
+  apparatusCreated: Array<CodeOfPoints>;
+  apparatusUpdated: Array<CodeOfPoints>;
+  codeOfPointsCreated: Array<CodeOfPoints>;
+  codeOfPointsUpdated: Array<CodeOfPoints>;
   createdAt: Scalars['DateTime'];
   email: Scalars['String'];
-  favourtieMove: Move;
+  favouriteMove: Move;
   googleRefreshToken?: Maybe<Scalars['String']>;
   id: Scalars['String'];
   loginCount: Scalars['Float'];
+  movesCreated: Array<Move>;
   passwordHash?: Maybe<Scalars['String']>;
   perishibleToken?: Maybe<Scalars['String']>;
+  savedRoutines: Array<SavedRoutine>;
   superAdmin: Scalars['Boolean'];
   updatedAt: Scalars['DateTime'];
 };
@@ -79,14 +187,14 @@ export type GetMoveQueryVariables = Exact<{
 }>;
 
 
-export type GetMoveQuery = { __typename?: 'Query', getMove: { __typename?: 'Move', id: string, name: string } };
+export type GetMoveQuery = { __typename?: 'Query', getMove: { __typename?: 'Move', id: string, description: string } };
 
 
 export const GetMoveDocument = gql`
     query getMove($id: String!) {
   getMove(id: $id) {
     id
-    name
+    description
   }
 }
     `;
