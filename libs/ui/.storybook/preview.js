@@ -22,7 +22,10 @@ export const decorators = [
       <div
         style={
           {
-            // padding: 20
+            // display: "flex",
+            // alignItems: "center",
+            // justifyContent: "center",
+            // height: "100vh"
           }
         }
       >

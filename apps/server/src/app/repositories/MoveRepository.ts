@@ -1,4 +1,5 @@
-import { EntityRepository, AbstractRepository } from "typeorm"
+import { AbstractRepository, EntityRepository } from "typeorm"
+
 import { Move } from "../../models/Move"
 import { NewMoveInput } from "../modules/moves/types"
 

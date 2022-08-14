@@ -1,4 +1,5 @@
-import { Connection, getConnection, createConnection, ConnectionOptions } from "typeorm"
+import { Connection, ConnectionOptions, createConnection, getConnection } from "typeorm"
+
 import { Move } from "../../models/Move"
 import { Session } from "../../models/Session"
 import { User } from "../../models/User"

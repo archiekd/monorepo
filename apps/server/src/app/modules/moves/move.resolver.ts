@@ -1,6 +1,7 @@
 import { Arg, Mutation, Query, Resolver } from "type-graphql"
 import { Service } from "typedi"
 import { InjectRepository } from "typeorm-typedi-extensions"
+
 import { Move } from "../../../models/Move"
 import { MoveRepository } from "../../repositories/MoveRepository"
 import { NewMoveInput } from "./types"
