@@ -5,11 +5,11 @@ import { ApolloServer } from "apollo-server-express"
 import cors from "cors"
 import express from "express"
 import http from "http"
-import { generateSchema, schema } from "./schema"
 import { ApolloServerLoaderPlugin } from "type-graphql-dataloader"
 import { getConnection, useContainer } from "typeorm"
 import { Container } from "typeorm-typedi-extensions"
 
+import { generateSchema, schema } from "./schema"
 import { connectPostgres } from "./services/Postgres"
 
 useContainer(Container)

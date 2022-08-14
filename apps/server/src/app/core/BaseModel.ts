@@ -1,5 +1,6 @@
-import { BeforeInsert, BeforeUpdate } from "typeorm"
 import { validate } from "class-validator"
+import { BeforeInsert, BeforeUpdate } from "typeorm"
+
 import { ClassValidatorError } from "../utils/errors/ClassValidatorError"
 
 export abstract class BaseModel {

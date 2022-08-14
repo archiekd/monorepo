@@ -1,4 +1,5 @@
-import { Connection, getConnection, createConnection, ConnectionOptions } from "typeorm"
+import { Connection, ConnectionOptions, createConnection, getConnection } from "typeorm"
+
 import { Apparatus } from "../models/Apparatus"
 import { ApparatusDeduction } from "../models/ApparatusDeduction"
 import { CodeOfPoints } from "../models/CodeOfPoints"
