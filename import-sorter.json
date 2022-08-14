@@ -13,12 +13,16 @@
       "disableSort": true
     },
     {
-      "regex": "(react|react-router-dom)",
+      "regex": "^(react|react-router-dom)$",
       "orderLevel": 15
     },
     {
-      "regex": "^[@]",
+      "regex": "^(?!@monorepo)([@])",
       "orderLevel": 20
+    },
+    {
+      "regex": "^[@monorepo]",
+      "orderLevel": 30
     },
     {
       "regex": "^[.]",

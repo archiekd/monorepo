@@ -17,6 +17,7 @@
     "../src/**/*.stories.jsx",
     "../src/**/*.stories.tsx",
     "../src/**/*.stories.mdx",
-    "*.js"
+    "*.js",
+    "../src/components/auth/Login.stories.msx"
   ]
 }

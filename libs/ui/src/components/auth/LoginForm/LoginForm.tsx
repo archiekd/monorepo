@@ -1,0 +1,47 @@
+import { yupResolver } from "@hookform/resolvers/yup"
+import { Stack } from "@mui/material"
+
+import { Controller, SubmitHandler, useForm } from "react-hook-form"
+
+import { UiButton, UiTypography } from "../../ui"
+import { UiTextField } from "../../ui/UiTextField"
+import { FormValues, schema } from "./schema"
+import { LoginFormWrapper } from "./style"
+
+interface Props {
+  onSubmit: SubmitHandler<FormValues>
+}
+
+export const LoginForm = ({ onSubmit }: Props) => {
+  // FIXME: handle errors properly
+  const {
+    control,
+    handleSubmit,
+    formState: { errors, isSubmitting }
+  } = useForm<FormValues>({ resolver: yupResolver(schema) })
+
+  return (
+    <LoginFormWrapper>
+      <UiTypography variant="h5" sx={{ marginBottom: "20px" }}>
+        Login
+      </UiTypography>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Stack spacing={2} width="100%">
+          <Controller
+            name="email"
+            control={control}
+            render={({ field }) => <UiTextField placeholder="Email" {...field} autoComplete="username" fullWidth sx={{ width: "100%" }} />}
+          />
+          <Controller
+            name="password"
+            control={control}
+            render={({ field }) => <UiTextField type="password" placeholder="Password" {...field} autoComplete="password" fullWidth />}
+          />
+          <UiButton loading={isSubmitting} variant="contained">
+            Login
+          </UiButton>
+        </Stack>
+      </form>
+    </LoginFormWrapper>
+  )
+}

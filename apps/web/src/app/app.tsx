@@ -1,31 +1,24 @@
-import { useState } from "react"
+import { BrowserRouter } from "react-router-dom"
 
-import { gql } from "@apollo/client"
-import { useGetMoveQuery } from "@monorepo/apollo-api"
-import { UiButton } from "@monorepo/ui"
-import styled from "styled-components"
+import { ApolloProvider } from "@apollo/client"
+import { createTheme, CssBaseline } from "@mui/material"
+import { ThemeProvider } from "styled-components"
 
-const StyledApp = styled.div`
-  // Your style here
-`
+import { theme } from "@monorepo/ui"
 
-gql`
-  query getMove($id: String!) {
-    getMove(id: $id) {
-      id
-      description
-    }
-  }
-`
+import { client } from "./graphql"
+import Router from "./routes"
 
 export function App() {
-  const [test, setTest] = useState(false)
-  const { data } = useGetMoveQuery({ variables: { id: "6b98788b-d09d-461a-b5a4-5a21d228a694" } })
-  console.log("data", data)
   return (
-    <StyledApp>
-      <UiButton>Hello</UiButton>
-    </StyledApp>
+    <ApolloProvider client={client}>
+      <ThemeProvider theme={createTheme(theme)}>
+        <CssBaseline />
+        <BrowserRouter>
+          <Router />
+        </BrowserRouter>
+      </ThemeProvider>
+    </ApolloProvider>
   )
 }
 
