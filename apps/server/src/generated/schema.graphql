@@ -1,0 +1,47 @@
+type Query {
+  getMove(id: String!): Move!
+}
+
+type Move {
+  id: String!
+  name: String!
+  apparatus: String!
+  pointValue: Float!
+  letterValue: String!
+  copGroup: String!
+  isDoubleRotation: Boolean!
+  users: [User!]!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type User {
+  id: String!
+  email: String!
+  passwordHash: String
+  loginCount: Float!
+  googleRefreshToken: String
+  perishibleToken: String
+  superAdmin: Boolean!
+  favourtieMove: Move!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""
+The javascript `Date` as string. Type represents date and time as the ISO Date string.
+"""
+scalar DateTime
+
+type Mutation {
+  createMove(newMoveInput: NewMoveInput!): Move!
+}
+
+input NewMoveInput {
+  name: String!
+  apparatus: String!
+  pointValue: Float!
+  letterValue: String!
+  copGroup: String!
+  isDoubleRotation: Boolean!
+}

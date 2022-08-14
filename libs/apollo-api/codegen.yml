@@ -1,0 +1,17 @@
+# libs/apollo-api/codegen.yml
+
+overwrite: true
+schema: "apps/server/src/generated/schema.graphql"
+documents:
+  - "apps/web/src/*/**/*.{ts,tsx,graphql}"
+generates:
+  libs/apollo-api/src/generated/types.tsx:
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-react-apollo"
+    config:
+      reactApolloVersion: 3
+      withHooks: true
+      withComponent: false
+      withHOC: false

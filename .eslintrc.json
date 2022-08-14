@@ -18,6 +18,15 @@
               }
             ]
           }
+        ],
+        "semi": "off",
+        "max-lines": [
+          "error",
+          {
+            "max": 150,
+            "skipBlankLines": true,
+            "skipComments": true
+          }
         ]
       }
     },
