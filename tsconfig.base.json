@@ -16,7 +16,8 @@
     "baseUrl": ".",
     "paths": {
       "@monorepo/apollo-api": ["libs/apollo-api/src/index.ts"],
-      "@monorepo/ui": ["libs/ui/src/index.ts"]
+      "@monorepo/ui": ["libs/ui/src/index.ts"],
+      "@mui/styled-engine": ["./node_modules/@mui/styled-engine-sc"]
     }
   },
   "exclude": ["node_modules", "tmp"]

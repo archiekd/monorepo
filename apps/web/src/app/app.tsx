@@ -1,7 +1,10 @@
 import styled from "styled-components"
+
 import { gql } from "@apollo/client"
-import NxWelcome from "./nx-welcome"
 import { useGetMoveQuery } from "@monorepo/apollo-api"
+import { UiButton } from "@monorepo/ui"
+
+import NxWelcome from "./nx-welcome"
 
 const StyledApp = styled.div`
   // Your style here
@@ -21,6 +24,7 @@ export function App() {
   console.log("data", data)
   return (
     <StyledApp>
+      <UiButton>Hello</UiButton>
       <NxWelcome title="web" />
     </StyledApp>
   )
