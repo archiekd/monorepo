@@ -2,7 +2,7 @@
   "generalConfiguration.sortOnBeforeSave": true,
   "importStringConfiguration.maximumNumberOfImportExpressionsPerLine.type": "newLineEachExpressionAfterCountLimitExceptIfOnlyOne",
   "importStringConfiguration.maximumNumberOfImportExpressionsPerLine.count": 150,
-  "importStringConfiguration.tabSize": 4,
+  "importStringConfiguration.tabSize": 2,
   "importStringConfiguration.quoteMark": "double",
   "importSorter.importStringConfiguration.hasSemicolon": false,
   "importSorter.sortConfiguration.customOrderingRules.rules": [
