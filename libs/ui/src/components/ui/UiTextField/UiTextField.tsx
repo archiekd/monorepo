@@ -25,7 +25,7 @@ const TextFieldBox = styled(Box)<BoxProps>(({ theme }) => ({
   }
 }))
 
-export const UiTextField = (props: UiTextFieldProps) => {
+export const UiTextField = React.forwardRef((props: UiTextFieldProps) => {
   const { sx, inputSx, disableUnderline = true, type = "text", ...restProps } = props
 
   return (
@@ -33,4 +33,4 @@ export const UiTextField = (props: UiTextFieldProps) => {
       <Input {...restProps} disableUnderline={disableUnderline} sx={inputSx} type={type} />
     </TextFieldBox>
   )
-}
+})
