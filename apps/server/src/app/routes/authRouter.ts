@@ -1,13 +1,15 @@
+import { AuthenticationError, UserInputError } from "apollo-server-express"
+import { isString } from "class-validator"
 import express from "express"
+import { GraphQLLocalStrategy } from "graphql-passport"
 import passport from "passport"
-import { getCustomRepository } from "typeorm"
 // import { Strategy as GoogleStrategy } from "passport-google-oauth20"
 import { JwtFromRequestFunction, Strategy as JwtStrategy } from "passport-jwt"
-import { GraphQLLocalStrategy } from "graphql-passport"
-import { UserRepository } from "../repositories/UserRepository"
-import { UserInputError, AuthenticationError } from "apollo-server-express"
+import { getCustomRepository } from "typeorm"
+
 import { User } from "../models/User"
 import { SessionRepository } from "../repositories/SessionRepository"
+import { UserRepository } from "../repositories/UserRepository"
 import { setTokenCookie } from "../utils/auth"
 
 passport.serializeUser<string>(function (user, done) {
@@ -22,12 +24,14 @@ passport.deserializeUser<string>(async function (id, done) {
 
 passport.use(
   new GraphQLLocalStrategy(async (email, password, done) => {
+    if (!isString(email)) return done(new UserInputError("Invalid email or password"))
+    if (!isString(password)) return done(new UserInputError("Invalid email or password"))
     const UserRepo = getCustomRepository(UserRepository)
 
-    const user = await UserRepo.findByEmail(email as string)
+    const user = await UserRepo.findByEmail(email)
     if (!user) return done(new UserInputError("Email or password does not match"), null)
 
-    const isValid = await UserRepo.validatePassword(user, password as string)
+    const isValid = await UserRepo.validatePassword(user, password)
     if (!isValid) return done(new UserInputError("Email or password does not match"), null)
 
     done(null, user)

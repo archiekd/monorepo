@@ -10,14 +10,14 @@ export const createTypeormConnections = async (opts: CreateConnectionOpts): Prom
   if (opts.loadEntitiesAndMigrations) {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const entitiesAndMigrations = require("../../entities-and-migrations").entitiesAndMigrations
-
+    console.log("entitiesAndMigrations.entities", entitiesAndMigrations.entities)
     return createConnection({
       name: "default",
       type: "postgres",
-      host: process.env.POSTGRES_HOST || "",
-      username: process.env.POSTGRES_USERNAME || "",
-      password: process.env.POSTGRES_PASSWORD || "",
-      database: process.env.POSTGRES_DATABASE || "",
+      host: process.env.TYPEORM_HOST || "localhost",
+      username: process.env.TYPEORM_USERNAME || "archiekd",
+      password: process.env.TYPEORM_PASSWORD || "",
+      database: process.env.TYPEORM_DATABASE || "routine_lab_local",
       port: 5432,
       synchronize: process.env.NODE_ENV === "development" ? true : false,
       logging: process.env.POSTGRES_LOGGING === "true" ? true : false,
