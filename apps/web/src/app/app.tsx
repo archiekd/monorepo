@@ -4,7 +4,7 @@ import { ApolloProvider } from "@apollo/client"
 import { createTheme, CssBaseline } from "@mui/material"
 import { ThemeProvider } from "styled-components"
 
-import { theme } from "@monorepo/ui"
+import { theme } from "@routine-lab/ui"
 
 import { client } from "./graphql"
 import Router from "./routes"

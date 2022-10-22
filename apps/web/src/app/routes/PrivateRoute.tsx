@@ -1,7 +1,7 @@
 import { Navigate, Outlet } from "react-router-dom"
 
-import { useGetCurrentUserQuery } from "@monorepo/apollo-api"
-import { LoadingScreen } from "@monorepo/ui"
+import { useGetCurrentUserQuery } from "@routine-lab/apollo-api"
+import { LoadingScreen } from "@routine-lab/ui"
 
 export const PrivateRoute = () => {
   const { data, loading } = useGetCurrentUserQuery()

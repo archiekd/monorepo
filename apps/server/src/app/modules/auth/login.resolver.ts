@@ -1,12 +1,13 @@
 import { UserInputError } from "apollo-server-core"
+import jwt from "jsonwebtoken"
 import { Arg, Authorized, Ctx, Mutation, Query, Resolver } from "type-graphql"
 import { Service } from "typedi"
 import { InjectRepository } from "typeorm-typedi-extensions"
+
 import { User } from "../../models/User"
 import { SessionRepository } from "../../repositories/SessionRepository"
 import { MyContext } from "../../types/MyContext"
 import { setTokenCookie } from "../../utils/auth"
-import jwt from "jsonwebtoken"
 
 @Service()
 @Resolver()

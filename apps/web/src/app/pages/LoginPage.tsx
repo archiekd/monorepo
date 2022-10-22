@@ -1,4 +1,4 @@
-import { AuthWrapper } from "@monorepo/ui"
+import { AuthWrapper } from "@routine-lab/ui"
 
 import LoginFormController from "../controllers/LoginFormController"
 

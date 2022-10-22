@@ -2,13 +2,18 @@ import "reflect-metadata"
 
 import { ApolloServerPluginDrainHttpServer, ApolloServerPluginLandingPageGraphQLPlayground } from "apollo-server-core"
 import { ApolloServer } from "apollo-server-express"
+import cookieParser from "cookie-parser"
 import cors from "cors"
 import express from "express"
+import { buildContext } from "graphql-passport"
 import http from "http"
+import passport from "passport"
 import { ApolloServerLoaderPlugin } from "type-graphql-dataloader"
 import { getConnection, useContainer } from "typeorm"
 import { Container } from "typeorm-typedi-extensions"
 
+import { User } from "./models/User"
+import { authRouter } from "./routes/authRouter"
 import { generateSchema, schema } from "./schema"
 import { connectPostgres } from "./services/Postgres"
 
@@ -30,6 +35,23 @@ export async function startApolloServer() {
     })
   )
 
+  app.use(cookieParser())
+  const passportMiddleware = passport.initialize()
+  app.use(passportMiddleware)
+  app.use(express.json())
+
+  app.use("/auth", authRouter)
+
+  app.use("/graphql", (req, res, next) => {
+    passport.authenticate("jwt", { session: false }, (err, user) => {
+      if (user) {
+        req.user = user
+      }
+
+      next()
+    })(req, res, next)
+  })
+
   const httpServer = http.createServer(app)
   const server = new ApolloServer({
     schema,
@@ -39,7 +61,14 @@ export async function startApolloServer() {
       ApolloServerLoaderPlugin({
         typeormGetConnection: getConnection // for use with TypeORM
       })
-    ]
+    ],
+    context: ({ req, res }) => {
+      return buildContext({
+        req,
+        res,
+        User
+      })
+    }
   })
   await server.start()
   server.applyMiddleware({ app, cors: false })

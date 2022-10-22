@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
-  "npmScope": "monorepo",
+  "npmScope": "routine-lab",
   "affected": {
     "defaultBase": "main"
   },

@@ -1,6 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup"
 import { Stack } from "@mui/material"
-
 import { Controller, SubmitHandler, useForm } from "react-hook-form"
 
 import { UiButton, UiTypography } from "../../ui"
@@ -18,7 +17,13 @@ export const LoginForm = ({ onSubmit }: Props) => {
     control,
     handleSubmit,
     formState: { errors, isSubmitting }
-  } = useForm<FormValues>({ resolver: yupResolver(schema) })
+  } = useForm<FormValues>({
+    resolver: yupResolver(schema),
+    defaultValues: {
+      email: "",
+      password: ""
+    }
+  })
 
   return (
     <LoginFormWrapper>
@@ -37,7 +42,7 @@ export const LoginForm = ({ onSubmit }: Props) => {
             control={control}
             render={({ field }) => <UiTextField type="password" placeholder="Password" {...field} autoComplete="password" fullWidth />}
           />
-          <UiButton loading={isSubmitting} variant="contained">
+          <UiButton loading={isSubmitting} variant="contained" type="submit">
             Login
           </UiButton>
         </Stack>

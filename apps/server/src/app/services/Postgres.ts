@@ -1,54 +1,47 @@
-import { Connection, ConnectionOptions, createConnection, getConnection } from "typeorm"
+import { Connection, createConnection, getConnection } from "typeorm"
 
-import { Apparatus } from "../models/Apparatus"
-import { ApparatusDeduction } from "../models/ApparatusDeduction"
-import { CodeOfPoints } from "../models/CodeOfPoints"
-import { CodeOfPointsGroup } from "../models/CodeOfPointsGroup"
-import { Move } from "../models/Move"
-import { RoutineMove } from "../models/RoutineMove"
-import { SavedRoutine } from "../models/SavedRoutine"
-import { Session } from "../models/Session"
-import { User } from "../models/User"
+type CreateConnectionOpts = {
+  loadEntitiesAndMigrations: boolean
+}
 
-const rootDir = process.env.NODE_ENV === "development" ? "src" : "dist/src"
-// type EntitiesAndMigrationsOpts = Pick<ConnectionOptions, "entities" | "migrations">
-// const importAllFunctions = (requireContext) =>
-//   requireContext
-//     .keys()
-//     .sort()
-//     .map((filename) => {
-//       const required = requireContext(filename)
-//       return Object.keys(required).reduce((result, exportedKey) => {
-//         const exported = required[exportedKey]
-//         if (typeof exported === "function") {
-//           return result.concat(exported)
-//         }
-//         return result
-//       }, [] as any)
-//     })
-//     .flat()
-// const entitiesViaWebpack: NonNullable<EntitiesAndMigrationsOpts["entities"]> = importAllFunctions(require.context("./entity/", true, /\.ts$/))
+let connection: Connection
 
-export const connectPostgres = async (): Promise<Connection> => {
-  let connection: Connection
+export const createTypeormConnections = async (opts: CreateConnectionOpts): Promise<Connection> => {
+  if (opts.loadEntitiesAndMigrations) {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const entitiesAndMigrations = require("../../entities-and-migrations").entitiesAndMigrations
 
-  try {
-    connection = getConnection()
-  } catch (err) {
-    connection = await createConnection({
+    return createConnection({
+      name: "default",
       type: "postgres",
-      host: process.env.TYPEORM_HOST || "localhost",
-      username: process.env.TYPEORM_USERNAME || "archiekd",
-      password: process.env.TYPEORM_PASSWORD || "",
-      database: process.env.TYPEORM_DATABASE || "routine_lab_local",
+      host: process.env.POSTGRES_HOST || "",
+      username: process.env.POSTGRES_USERNAME || "",
+      password: process.env.POSTGRES_PASSWORD || "",
+      database: process.env.POSTGRES_DATABASE || "",
       port: 5432,
       synchronize: process.env.NODE_ENV === "development" ? true : false,
-      logging: process.env.NODE_ENV === "development" ? false : false,
-      entities: [Move, Session, User, Apparatus, ApparatusDeduction, CodeOfPoints, CodeOfPointsGroup, RoutineMove, SavedRoutine],
-      migrations: [rootDir + "/migrations/*.{js,ts}"],
-      subscribers: [rootDir + "/subscribers/**/*.{js,ts}"]
+      logging: process.env.POSTGRES_LOGGING === "true" ? true : false,
+      entities: entitiesAndMigrations.entities,
+      migrations: entitiesAndMigrations.migrations,
+      subscribers: entitiesAndMigrations.subscribers
     })
   }
 
+  console.log("Using ORM Config for Postgres configuration")
+  return createConnection()
+}
+
+export const connectPostgres = async (opts: CreateConnectionOpts = { loadEntitiesAndMigrations: true }) => {
+  try {
+    connection = getConnection()
+  } catch (err) {
+    connection = await createTypeormConnections(opts)
+  }
+
   return connection
+}
+
+export const closePostgresConnection = async () => {
+  if (!connection) return
+  await connection.close()
 }

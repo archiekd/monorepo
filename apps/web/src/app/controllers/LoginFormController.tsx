@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client"
 
-import { useGetCurrentUserLazyQuery, useLoginMutation } from "@monorepo/apollo-api"
-import { LoginForm } from "@monorepo/ui"
+import { useGetCurrentUserLazyQuery, useLoginMutation } from "@routine-lab/apollo-api"
+import { LoginForm } from "@routine-lab/ui"
 
 gql`
   mutation login($email: String!, $password: String!) {

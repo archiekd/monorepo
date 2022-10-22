@@ -1,13 +1,17 @@
 import fs from "fs"
 import { GraphQLSchema, printSchema } from "graphql"
-import { buildSchemaSync } from "type-graphql"
+import { BuildSchemaOptions, buildSchemaSync } from "type-graphql"
 import Container from "typedi"
-import { LoginResolver } from "./modules/auth/login.resolver"
-import { MoveResolver } from "./modules/moves/move.resolver"
+
+// import { LoginResolver } from "./modules/auth/login.resolver"
+// import { MoveResolver } from "./modules/moves/move.resolver"
 import { authChecker } from "./utils/auth"
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const resolversViaWebpack = require("../entities-and-migrations").resolversViaWebpack
+console.log("resolversViaWebpack", resolversViaWebpack)
 export const schema = buildSchemaSync({
-  resolvers: [MoveResolver, LoginResolver],
+  resolvers: [...(resolversViaWebpack.resolvers as BuildSchemaOptions["resolvers"])],
   authChecker,
   container: Container
 })

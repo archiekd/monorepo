@@ -122,6 +122,7 @@ scalar DateTime
 type Mutation {
   logout: Boolean!
   login(password: String!, email: String!): User
+  signup(password: String!, email: String!): User
   createMove(newMoveInput: NewMoveInput!): Move!
 }
 

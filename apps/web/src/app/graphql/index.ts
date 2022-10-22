@@ -1,5 +1,6 @@
 import { ApolloClient, ApolloLink, from, HttpLink } from "@apollo/client"
 import { onError } from "@apollo/client/link/error"
+
 import { cache } from "./schema"
 
 const httpLink = new HttpLink({

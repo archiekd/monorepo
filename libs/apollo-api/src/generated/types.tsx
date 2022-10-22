@@ -115,6 +115,7 @@ export type Mutation = {
   createMove: Move;
   login?: Maybe<User>;
   logout: Scalars['Boolean'];
+  signup?: Maybe<User>;
 };
 
 
@@ -124,6 +125,12 @@ export type MutationCreateMoveArgs = {
 
 
 export type MutationLoginArgs = {
+  email: Scalars['String'];
+  password: Scalars['String'];
+};
+
+
+export type MutationSignupArgs = {
   email: Scalars['String'];
   password: Scalars['String'];
 };

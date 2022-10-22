@@ -17,11 +17,11 @@
       "orderLevel": 15
     },
     {
-      "regex": "^(?!@monorepo)([@])",
+      "regex": "^(?!@routine-lab)([@])",
       "orderLevel": 20
     },
     {
-      "regex": "^[@monorepo]",
+      "regex": "^(@routine-lab)",
       "orderLevel": 30
     },
     {
