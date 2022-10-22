@@ -38,6 +38,7 @@ export async function startApolloServer() {
   app.use(cookieParser())
   const passportMiddleware = passport.initialize()
   app.use(passportMiddleware)
+
   app.use(express.json())
 
   app.use("/auth", authRouter)

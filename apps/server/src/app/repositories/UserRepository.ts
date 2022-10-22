@@ -1,4 +1,5 @@
-import { EntityRepository, AbstractRepository } from "typeorm"
+import { AbstractRepository, EntityRepository } from "typeorm"
+
 import { User } from "../models/User"
 import { generatePasswordHash, validatePassword } from "../utils/encryption"
 
