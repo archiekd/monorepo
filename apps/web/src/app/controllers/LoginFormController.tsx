@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router-dom"
+
 import { gql } from "@apollo/client"
 
 import { useGetCurrentUserLazyQuery, useLoginMutation } from "@routine-lab/apollo-api"
@@ -12,6 +14,7 @@ gql`
 `
 
 const LoginFormController = () => {
+  const navigate = useNavigate()
   const [login] = useLoginMutation()
   const [getCurrentUser] = useGetCurrentUserLazyQuery()
 
@@ -20,8 +23,11 @@ const LoginFormController = () => {
       onSubmit={async (values) => {
         await login({ variables: { email: values.email, password: values.password } })
         getCurrentUser()
+        navigate("/")
       }}
-    />
+      handleRegisterClick={() => navigate("/register")}
+      handleForgotPasswordClick={() => navigate("/forgot-password")}
+      />
   )
 }
 

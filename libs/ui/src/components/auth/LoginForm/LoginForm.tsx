@@ -9,9 +9,12 @@ import { LoginFormWrapper } from "./style"
 
 interface Props {
   onSubmit: SubmitHandler<FormValues>
+  handleRegisterClick: () => void;
+  handleForgotPasswordClick: () => void;
 }
 
-export const LoginForm = ({ onSubmit }: Props) => {
+export const LoginForm = ({ onSubmit, handleForgotPasswordClick, handleRegisterClick }: Props) => {
+
   // FIXME: handle errors properly
   const {
     control,
@@ -47,6 +50,10 @@ export const LoginForm = ({ onSubmit }: Props) => {
           </UiButton>
         </Stack>
       </form>
+      <Stack direction="row">
+        <UiButton onClick={handleForgotPasswordClick}>Forgot password?</UiButton>
+        <UiButton onClick={handleRegisterClick}>Register</UiButton>
+      </Stack>
     </LoginFormWrapper>
   )
 }
