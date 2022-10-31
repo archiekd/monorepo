@@ -3,7 +3,12 @@ import { ComponentMeta, ComponentStory } from "@storybook/react"
 import { LoginForm } from "./LoginForm"
 
 export default {
-  component: LoginForm
+  component: LoginForm,
+  argTypes: {
+    onSubmit: {
+      action: "onSubmit"
+    }
+  }
 } as ComponentMeta<typeof LoginForm>
 
 const Template: ComponentStory<typeof LoginForm> = (args) => (
@@ -11,6 +16,8 @@ const Template: ComponentStory<typeof LoginForm> = (args) => (
     onSubmit={(values) => {
       console.log("values", values)
     }}
+    handleRegisterClick={() => console.log("register")}
+    handleForgotPasswordClick={() => console.log("forgot")}
   />
 )
 

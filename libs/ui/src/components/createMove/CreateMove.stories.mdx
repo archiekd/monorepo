@@ -1,0 +1,16 @@
+import { Meta, Story } from "@storybook/addon-docs"
+
+import { AuthWrapper } from "../wrappers/AuthWrapper"
+import { CreateMoveForm } from "./CreateMoveForm/CreateMoveForm.tsx"
+
+<Meta title="Create Move Page" />
+
+<Story name="CreateMoveFormPage">
+  <AuthWrapper>
+    <CreateMoveForm
+      onSubmit={(values) => {
+        console.log(values)
+      }}
+    />
+  </AuthWrapper>
+</Story>
