@@ -1,12 +1,12 @@
 import { yupResolver } from "@hookform/resolvers/yup"
-import { Stack, styled } from "@mui/material"
+import { Stack } from "@mui/material"
 import { Controller, SubmitHandler, useForm } from "react-hook-form"
 
-import { LoginFormWrapper } from "../../auth/LoginForm/style"
 import { UiButton, UiTypography } from "../../ui"
 import { UiRadioGroup } from "../../ui/RadioGroup"
 import { UiToggle } from "../../ui/Toggle"
 import { UiTextField } from "../../ui/UiTextField"
+import { LoginFormWrapper } from "../LoginForm/style"
 import { FormValues, schema } from "./schema"
 
 // import { LoginFormWrapper } from "./style"
@@ -32,13 +32,6 @@ const radioGroupValue = [
   { value: "e", label: "E" },
   { value: "f", label: "F" }
 ]
-
-export const RequiredLabel = styled.span`
-  &:after {
-    content: " *";
-    color: red;
-  }
-`
 
 export const CreateMoveForm = ({ onSubmit }: Props) => {
   // FIXME: handle errors properly
@@ -67,9 +60,7 @@ export const CreateMoveForm = ({ onSubmit }: Props) => {
           <Controller
             name="name"
             control={control}
-            render={({ field }) => (
-              <UiTextField placeholder={`${(<RequiredLabel>Name</RequiredLabel>)}`} {...field} fullWidth sx={{ width: "50%" }} />
-            )}
+            render={({ field }) => <UiTextField placeholder="Name" {...field} fullWidth sx={{ width: "50%" }} />}
           />
           <Controller name="description" control={control} render={({ field }) => <UiTextField placeholder="Description" {...field} fullWidth />} />
           <UiTypography>Value</UiTypography>
