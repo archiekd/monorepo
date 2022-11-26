@@ -1,6 +1,6 @@
 import { ComponentMeta, ComponentStory } from "@storybook/react"
 
-import { UiTextField } from "./UiTextField"
+import { UiTextField } from "./TextField"
 
 export default {
   component: UiTextField
@@ -11,9 +11,9 @@ const Template: ComponentStory<typeof UiTextField> = (args) => <UiTextField {...
 export const Default = Template.bind({})
 
 Default.parameters = {
-    controls: {include: ["type", "sx", "inputSx", "disableUnderline"]}
+  controls: { include: ["type", "sx", "inputSx", "disableUnderline"] }
 }
 Default.args = {
-    type: "text",
-    disableUnderline: true
+  type: "text",
+  disableUnderline: true
 }

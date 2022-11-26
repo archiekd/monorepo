@@ -1,1 +1,1 @@
-export * from "./UiToggle"
+export * from "./Toggle"

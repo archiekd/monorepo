@@ -1,6 +1,6 @@
 import { ComponentMeta, ComponentStory } from "@storybook/react"
 
-import { UiRadioGroup } from "./UiRadioGroup"
+import { UiRadioGroup } from "./RadioGroup"
 
 export default {
   component: UiRadioGroup

@@ -1,5 +1,6 @@
 import { ComponentMeta, ComponentStory } from "@storybook/react"
-import { UiButton } from "./UiButton"
+
+import { UiButton } from "./Button"
 
 export default {
   component: UiButton

@@ -4,8 +4,8 @@ import { Controller, SubmitHandler, useForm } from "react-hook-form"
 
 import { UiButton, UiTypography } from "../../ui"
 import { UiRadioGroup } from "../../ui/RadioGroup"
+import { UiTextField } from "../../ui/TextField"
 import { UiToggle } from "../../ui/Toggle"
-import { UiTextField } from "../../ui/UiTextField"
 import { LoginFormWrapper } from "../LoginForm/style"
 import { FormValues, schema } from "./schema"
 

@@ -1,1 +1,1 @@
-export * from "./UiRadioGroup"
+export * from "./RadioGroup"
