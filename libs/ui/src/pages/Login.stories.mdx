@@ -1,16 +1,12 @@
 import { Meta, Story } from "@storybook/addon-docs"
 
 import { AuthWrapper } from "../components/wrappers/AuthWrapper"
-import { LoginForm } from "../components/forms/LoginForm/LoginForm"
+import { LoginFormStory } from "../components/forms/LoginForm/LoginForm.stories"
 
 <Meta title="pages/Login Page" />
 
 <Story name="Login Page">
   <AuthWrapper>
-    <LoginForm
-      onSubmit={(values) => {
-        console.log(values)
-      }}
-    />
+    <LoginFormStory {...LoginFormStory.args} />
   </AuthWrapper>
 </Story>
