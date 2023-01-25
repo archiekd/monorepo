@@ -21,10 +21,10 @@ export const StartValueBox: React.FC<StartValueBoxProps> = ({ base, dScore, requ
       <ScoreAddition label="Base - " score={base} color="black" />
       <ScoreAddition label="D score - " score={dScore} color="purple" />
       <ScoreAddition label="Requirements - " score={requirements} color="green" />
-      {connections ? <ScoreAddition label="Connections - " score={connections} color="orange" /> : null}
+      <ScoreAddition label="Connections - " score={connections} color="orange" />
       <Box
         sx={{ backgroundColor: "lightblue", height: "60px" }}
-        borderRadius="5px"
+        borderRadius="0 0 5px 5px"
         display="flex"
         justifyContent="center"
         flexDirection="column"
