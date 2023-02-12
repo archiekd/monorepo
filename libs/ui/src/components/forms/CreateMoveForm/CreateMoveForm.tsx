@@ -67,8 +67,8 @@ export const CreateMoveForm = ({ onSubmit }: Props) => {
           <Controller name="value" control={control} render={({ field }) => <UiRadioGroup options={radioGroupValue} row {...field} />} />
           <UiTypography>Double Rotation?</UiTypography>
           <UiToggle />
-          <UiTypography>Value</UiTypography>
-          <Controller name="value" control={control} render={({ field }) => <UiRadioGroup options={radioGroupApparatus} row {...field} />} />
+          <UiTypography>Apparatus</UiTypography>
+          <Controller name="apparatus" control={control} render={({ field }) => <UiRadioGroup options={radioGroupApparatus} row {...field} />} />
           <UiButton loading={isSubmitting} variant="contained" type="submit">
             Save
           </UiButton>
