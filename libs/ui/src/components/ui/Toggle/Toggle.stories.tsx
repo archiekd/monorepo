@@ -1,6 +1,6 @@
 import { ComponentMeta, ComponentStory } from "@storybook/react"
 
-import { UiToggle } from "./UiToggle"
+import { UiToggle } from "./Toggle"
 
 export default {
   component: UiToggle
@@ -11,10 +11,10 @@ const Template: ComponentStory<typeof UiToggle> = (args) => <UiToggle {...args}>
 export const Default = Template.bind({})
 
 Default.parameters = {
-    controls: {include: ["label", "labelPlacement", "color", "size"]}
+  controls: { include: ["label", "labelPlacement", "color", "size"] }
 }
 Default.args = {
-    labelPlacement: "end",
-    color: "primary",
-    size: "medium"
+  labelPlacement: "end",
+  color: "primary",
+  size: "medium"
 }

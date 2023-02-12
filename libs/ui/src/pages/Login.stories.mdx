@@ -1,0 +1,12 @@
+import { Meta, Story } from "@storybook/addon-docs"
+
+import { AuthWrapper } from "../components/wrappers/AuthWrapper"
+import { LoginFormStory } from "../components/forms/LoginForm/LoginForm.stories"
+
+<Meta title="pages/Login Page" />
+
+<Story name="Login Page">
+  <AuthWrapper>
+    <LoginFormStory {...LoginFormStory.args} />
+  </AuthWrapper>
+</Story>

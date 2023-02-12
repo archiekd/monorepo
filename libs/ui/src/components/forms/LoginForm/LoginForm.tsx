@@ -3,18 +3,17 @@ import { Stack } from "@mui/material"
 import { Controller, SubmitHandler, useForm } from "react-hook-form"
 
 import { UiButton, UiTypography } from "../../ui"
-import { UiTextField } from "../../ui/UiTextField"
+import { UiTextField } from "../../ui/TextField"
 import { FormValues, schema } from "./schema"
 import { LoginFormWrapper } from "./style"
 
 interface Props {
   onSubmit: SubmitHandler<FormValues>
-  handleRegisterClick: () => void;
-  handleForgotPasswordClick: () => void;
+  handleRegisterClick: () => void
+  handleForgotPasswordClick: () => void
 }
 
 export const LoginForm = ({ onSubmit, handleForgotPasswordClick, handleRegisterClick }: Props) => {
-
   // FIXME: handle errors properly
   const {
     control,
