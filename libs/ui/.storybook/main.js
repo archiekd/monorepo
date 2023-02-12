@@ -5,7 +5,12 @@ module.exports = {
 
   core: { ...rootMain.core, builder: "webpack5" },
 
-  stories: [...rootMain.stories, "../src/components/**/*.stories.mdx", "../src/components/**/*.stories.@(js|jsx|ts|tsx)"],
+  stories: [
+    ...rootMain.stories,
+    "../src/components/**/*.stories.mdx",
+    "../src/pages/**/*.stories.mdx",
+    "../src/components/**/*.stories.@(js|jsx|ts|tsx)"
+  ],
   addons: [...rootMain.addons, "@nrwl/react/plugins/storybook"],
   webpackFinal: async (config, { configType }) => {
     // apply any global webpack configs that might have been specified in .storybook/main.js
