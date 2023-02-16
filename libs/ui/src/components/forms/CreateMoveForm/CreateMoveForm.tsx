@@ -47,6 +47,7 @@ export const CreateMoveForm = ({ onSubmit }: Props) => {
   const {
     control,
     handleSubmit,
+    reset,
     formState: { errors, isSubmitting }
   } = useForm<FormValues>({
     resolver: yupResolver(schema),
@@ -65,7 +66,14 @@ export const CreateMoveForm = ({ onSubmit }: Props) => {
       <UiTypography variant="h5" sx={{ marginBottom: "20px" }}>
         Create Move
       </UiTypography>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form
+        onSubmit={handleSubmit((values) => {
+          console.log("values", values)
+
+          onSubmit(values)
+          reset()
+        })}
+      >
         <Stack spacing={2} width="100%">
           <Controller
             name="name"
@@ -76,7 +84,7 @@ export const CreateMoveForm = ({ onSubmit }: Props) => {
           <UiTypography>Value</UiTypography>
           <Controller name="value" control={control} render={({ field }) => <UiRadioGroup options={radioGroupValue} row {...field} />} />
           <UiTypography>Double Rotation?</UiTypography>
-          <UiToggle />
+          <Controller name="doubleRotation" control={control} render={({ field }) => <UiToggle {...field} />} />
           <UiTypography>Apparatus</UiTypography>
           <Controller name="apparatus" control={control} render={({ field }) => <UiRadioGroup options={radioGroupApparatus} row {...field} />} />
           <UiTypography>Element Group</UiTypography>
