@@ -1,11 +1,18 @@
-import { boolean, InferType, object, string } from "yup"
+import { boolean, InferType, mixed, object, string } from "yup"
+
+import { ApparatusName, CopGroup, MoveValue } from "../../../../../../apps/web/src/generated/types"
+
+const oneOfEnum = <T>(enumObject: { [s: string]: T } | ArrayLike<T>) => {
+  return mixed<T>().oneOf(Object.values(enumObject))
+}
 
 export const schema = object({
   name: string().defined("Name is required"),
   description: string().nullable(),
-  value: string().oneOf(["a", "b", "c", "d", "e", "f"]),
+  value: oneOfEnum(MoveValue),
   doubleRotation: boolean().required(),
-  apparatus: string().oneOf(["floor", "pommel", "vault", "highBar", "parallelBars", "rings"])
+  apparatus: oneOfEnum(ApparatusName),
+  group: oneOfEnum(CopGroup)
 }).defined()
 
 export type FormValues = InferType<typeof schema>

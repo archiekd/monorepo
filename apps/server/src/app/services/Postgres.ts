@@ -15,7 +15,7 @@ export const createTypeormConnections = async (opts: CreateConnectionOpts): Prom
       name: "default",
       type: "postgres",
       host: process.env.TYPEORM_HOST || "localhost",
-      username: process.env.TYPEORM_USERNAME || "archiekd",
+      username: process.env.TYPEORM_USERNAME || "hectorkennedy-dyson",
       password: process.env.TYPEORM_PASSWORD || "",
       database: process.env.TYPEORM_DATABASE || "routine_lab_local",
       port: 5432,

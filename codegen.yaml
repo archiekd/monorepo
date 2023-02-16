@@ -1,0 +1,25 @@
+overwrite: true
+schema:
+  - apps/server/src/generated/schema.graphql
+  - apps/web/src/graphql/schema.ts
+documents:
+  - apps/web/src/*/**/*.{ts,tsx,graphql}
+require:
+  - ts-node/register/transpile-only
+  - tsconfig-paths/register
+generates:
+  apps/web/src/generated/types.ts:
+    plugins:
+      - typescript
+      - typescript-operations
+      - typed-document-node
+  # packages/client/src/generated/types.ts:
+  #   plugins:
+  #     - typescript
+  #     - typescript-operations
+  #     - typescript-react-apollo
+  #   config:
+  #     reactApolloVersion: 3
+  #     withComponent: false
+  #     withHOC: false
+  #     withHooks: true

@@ -1,5 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup"
 import { Stack } from "@mui/material"
+import { ApparatusName, CopGroup, MoveValue } from "apps/web/src/generated/types"
 import { Controller, SubmitHandler, useForm } from "react-hook-form"
 
 import { UiButton, UiTypography } from "../../ui"
@@ -16,21 +17,29 @@ interface Props {
 }
 
 const radioGroupApparatus = [
-  { value: "floor", label: "Floor" },
-  { value: "pommel", label: "Pommels" },
-  { value: "rings", label: "Rings" },
-  { value: "vault", label: "Vault" },
-  { value: "highBar", label: "High Bar" },
-  { value: "parallelBars", label: "Parallel Bars" }
+  { value: "FLOOR", label: "Floor" },
+  { value: "POMMEL", label: "Pommels" },
+  { value: "RINGS", label: "Rings" },
+  { value: "VAULT", label: "Vault" },
+  { value: "HIGH_BAR", label: "High Bar" },
+  { value: "PARALLEL_BARS", label: "Parallel Bars" }
 ]
 
 const radioGroupValue = [
-  { value: "a", label: "A" },
-  { value: "b", label: "B" },
-  { value: "c", label: "C" },
-  { value: "d", label: "D" },
-  { value: "e", label: "E" },
-  { value: "f", label: "F" }
+  { value: "A", label: "A" },
+  { value: "B", label: "B" },
+  { value: "C", label: "C" },
+  { value: "D", label: "D" },
+  { value: "E", label: "E" },
+  { value: "F", label: "F" }
+]
+
+const copGroup = [
+  { value: "I", label: "I" },
+  { value: "II", label: "II" },
+  { value: "III", label: "III" },
+  { value: "IV", label: "IV" },
+  { value: "V", label: "V" }
 ]
 
 export const CreateMoveForm = ({ onSubmit }: Props) => {
@@ -44,9 +53,10 @@ export const CreateMoveForm = ({ onSubmit }: Props) => {
     defaultValues: {
       name: "",
       description: "",
-      value: "a",
+      value: MoveValue.A,
       doubleRotation: false,
-      apparatus: "floor"
+      apparatus: ApparatusName.Floor,
+      group: CopGroup.I
     }
   })
 
@@ -69,6 +79,8 @@ export const CreateMoveForm = ({ onSubmit }: Props) => {
           <UiToggle />
           <UiTypography>Apparatus</UiTypography>
           <Controller name="apparatus" control={control} render={({ field }) => <UiRadioGroup options={radioGroupApparatus} row {...field} />} />
+          <UiTypography>Element Group</UiTypography>
+          <Controller name="group" control={control} render={({ field }) => <UiRadioGroup options={copGroup} row {...field} />} />
           <UiButton loading={isSubmitting} variant="contained" type="submit">
             Save
           </UiButton>

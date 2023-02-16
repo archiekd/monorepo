@@ -27,8 +27,9 @@ type Move {
   description: String!
   namedAfter: String
   otherNames: [String!]!
-  copGroup: CopGroup!
-  copIndex: String!
+  copGroup: CodeOfPointsGroup!
+  letterValue: String!
+  copIndex: String
   isDoubleRotation: Boolean!
   apparatus: Apparatus!
   routineMoves: [SavedRoutine!]!
@@ -38,13 +39,12 @@ type Move {
   updatedAt: DateTime!
 }
 
-"""The COP group that the move is part of"""
-enum CopGroup {
-  I
-  II
-  III
-  IV
-  V
+type CodeOfPointsGroup {
+  id: String!
+  group: Float!
+  description: String!
+  apparatus: Apparatus!
+  move: [Move!]!
 }
 
 type Apparatus {
@@ -54,6 +54,7 @@ type Apparatus {
   presentationInformation: String!
   dScoreInformation: String!
   moves: [Move!]!
+  codeOfPointsGroups: CodeOfPointsGroup!
   deduction: ApparatusDeduction!
   codeOfPoints: CodeOfPoints!
   createdBy: User!
@@ -143,4 +144,13 @@ enum MoveValue {
   E
   F
   G
+}
+
+"""The COP group that the move is part of"""
+enum CopGroup {
+  I
+  II
+  III
+  IV
+  V
 }

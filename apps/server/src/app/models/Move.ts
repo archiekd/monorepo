@@ -1,6 +1,7 @@
 import { Field, ObjectType, registerEnumType } from "type-graphql"
 import { TypeormLoader } from "type-graphql-dataloader"
 import { Column, CreateDateColumn, Entity, JoinTable, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm"
+
 import { BaseModel } from "../core/BaseModel"
 import { Apparatus } from "./Apparatus"
 import { CodeOfPointsGroup } from "./CodeOfPointsGroup"
@@ -61,24 +62,28 @@ export class Move extends BaseModel {
   namedAfter?: string
 
   @Field(() => [String])
-  @Column("varchar", { array: true })
+  @Column("varchar", { array: true, default: [] })
   otherNames: string[]
 
   @TypeormLoader()
-  @Field(() => CopGroup)
+  @Field(() => CodeOfPointsGroup)
   @ManyToOne(() => CodeOfPointsGroup, (copGroup) => copGroup.move)
-  copGroup: CopGroup
+  copGroup: Promise<CodeOfPointsGroup>
 
   @Field()
   @Column()
-  copIndex: string
+  letterValue: MoveValue
+
+  @Field({ nullable: true })
+  @Column({ nullable: true })
+  copIndex?: string
 
   @Field()
   @Column()
   isDoubleRotation: boolean
 
-  @Field(() => Apparatus)
   @TypeormLoader()
+  @Field(() => Apparatus)
   @ManyToOne(() => Apparatus, (apparatus) => apparatus.moves)
   apparatus: Promise<Apparatus>
 

@@ -1,7 +1,9 @@
 import { Field, ObjectType } from "type-graphql"
 import { TypeormLoader } from "type-graphql-dataloader"
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm"
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm"
+
 import { BaseModel } from "../core/BaseModel"
+import { Apparatus } from "./Apparatus"
 import { Move } from "./Move"
 
 @Entity()
@@ -18,6 +20,10 @@ export class CodeOfPointsGroup extends BaseModel {
   @Field()
   @Column()
   description: string
+
+  @Field(() => Apparatus)
+  @ManyToOne(() => Apparatus, (apparatus) => apparatus.codeOfPointsGroups)
+  apparatus: Promise<Apparatus>
 
   @TypeormLoader()
   @Field(() => [Move])

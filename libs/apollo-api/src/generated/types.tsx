@@ -20,6 +20,7 @@ export type Scalars = {
 export type Apparatus = {
   __typename?: 'Apparatus';
   codeOfPoints: CodeOfPoints;
+  codeOfPointsGroups: CodeOfPointsGroup;
   createdBy: User;
   dScoreInformation: Scalars['String'];
   deduction: ApparatusDeduction;
@@ -60,6 +61,15 @@ export type CodeOfPoints = {
   updateBy: User;
 };
 
+export type CodeOfPointsGroup = {
+  __typename?: 'CodeOfPointsGroup';
+  apparatus: Apparatus;
+  description: Scalars['String'];
+  group: Scalars['Float'];
+  id: Scalars['String'];
+  move: Array<Move>;
+};
+
 /** The COP group that the move is part of */
 export enum CopGroup {
   I = 'I',
@@ -85,13 +95,14 @@ export enum Fig {
 export type Move = {
   __typename?: 'Move';
   apparatus: Apparatus;
-  copGroup: CopGroup;
-  copIndex: Scalars['String'];
+  copGroup: CodeOfPointsGroup;
+  copIndex?: Maybe<Scalars['String']>;
   createdAt: Scalars['DateTime'];
   createdBy: User;
   description: Scalars['String'];
   id: Scalars['String'];
   isDoubleRotation: Scalars['Boolean'];
+  letterValue: Scalars['String'];
   namedAfter?: Maybe<Scalars['String']>;
   otherNames: Array<Scalars['String']>;
   routineMoves: Array<SavedRoutine>;
@@ -206,6 +217,13 @@ export type GetCurrentUserQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetCurrentUserQuery = { __typename?: 'Query', getCurrentUser?: { __typename?: 'User', id: string, email: string } | null };
 
+export type CreateMoveMutationVariables = Exact<{
+  newMoveInput: NewMoveInput;
+}>;
+
+
+export type CreateMoveMutation = { __typename?: 'Mutation', createMove: { __typename?: 'Move', id: string, description: string } };
+
 export const CurrentUserFragmentDoc = gql`
     fragment CurrentUser on User {
   id
@@ -286,3 +304,36 @@ export function useGetCurrentUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOpt
 export type GetCurrentUserQueryHookResult = ReturnType<typeof useGetCurrentUserQuery>;
 export type GetCurrentUserLazyQueryHookResult = ReturnType<typeof useGetCurrentUserLazyQuery>;
 export type GetCurrentUserQueryResult = Apollo.QueryResult<GetCurrentUserQuery, GetCurrentUserQueryVariables>;
+export const CreateMoveDocument = gql`
+    mutation createMove($newMoveInput: NewMoveInput!) {
+  createMove(newMoveInput: $newMoveInput) {
+    ...DefaultMoveValues
+  }
+}
+    ${DefaultMoveValuesFragmentDoc}`;
+export type CreateMoveMutationFn = Apollo.MutationFunction<CreateMoveMutation, CreateMoveMutationVariables>;
+
+/**
+ * __useCreateMoveMutation__
+ *
+ * To run a mutation, you first call `useCreateMoveMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateMoveMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createMoveMutation, { data, loading, error }] = useCreateMoveMutation({
+ *   variables: {
+ *      newMoveInput: // value for 'newMoveInput'
+ *   },
+ * });
+ */
+export function useCreateMoveMutation(baseOptions?: Apollo.MutationHookOptions<CreateMoveMutation, CreateMoveMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateMoveMutation, CreateMoveMutationVariables>(CreateMoveDocument, options);
+      }
+export type CreateMoveMutationHookResult = ReturnType<typeof useCreateMoveMutation>;
+export type CreateMoveMutationResult = Apollo.MutationResult<CreateMoveMutation>;
+export type CreateMoveMutationOptions = Apollo.BaseMutationOptions<CreateMoveMutation, CreateMoveMutationVariables>;

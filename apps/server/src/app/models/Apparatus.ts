@@ -1,9 +1,11 @@
 import { Field, ObjectType, registerEnumType } from "type-graphql"
 import { TypeormLoader } from "type-graphql-dataloader"
 import { Column, Entity, Index, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm"
+
 import { BaseModel } from "../core/BaseModel"
 import { ApparatusDeduction } from "./ApparatusDeduction"
 import { CodeOfPoints } from "./CodeOfPoints"
+import { CodeOfPointsGroup } from "./CodeOfPointsGroup"
 import { Move } from "./Move"
 import { User } from "./User"
 
@@ -49,6 +51,11 @@ export class Apparatus extends BaseModel {
   @Field(() => [Move])
   @OneToMany(() => Move, (move) => move.apparatus)
   moves: Promise<Move[]>
+
+  @TypeormLoader()
+  @Field(() => CodeOfPointsGroup)
+  @OneToMany(() => CodeOfPointsGroup, (codeOfPointsGroup) => codeOfPointsGroup.apparatus)
+  codeOfPointsGroups: Promise<CodeOfPointsGroup[]>
 
   @TypeormLoader()
   @Field(() => ApparatusDeduction)
