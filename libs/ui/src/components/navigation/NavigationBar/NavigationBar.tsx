@@ -8,7 +8,7 @@ import { useBreakpoints } from "../../../hooks/useBreakpoints"
 import { UiTypography } from "../../ui"
 import { NavigationBarButton } from "./NavigationBarButton"
 
-const pages = ["home", "create-move", "create-routine"] as const
+const pages = ["home", "create-move", "create-routine"]
 type Pages = typeof pages[number]
 
 const humanise = (value: string) => {
