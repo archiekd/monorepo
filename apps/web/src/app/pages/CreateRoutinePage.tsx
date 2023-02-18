@@ -1,13 +1,19 @@
-import React from "react"
 import { useParams } from "react-router-dom"
 
-// eslint-disable-next-line @typescript-eslint/ban-types
-type CreateRoutinePageProps = {}
+import BasicWrapper from "libs/ui/src/components/wrappers/BasicWrapper/BasicWrapper"
 
-const CreateRoutinePage: React.FC<CreateRoutinePageProps> = () => {
+import CreateRoutinePageController from "../controllers/CreateRoutinePageController"
+
+const CreateRoutinePage = () => {
   const { apparatus } = useParams()
 
-  return <div>Create {apparatus} Routine Page!</div>
+  if (!apparatus) return <div>Error finding apparatus</div>
+
+  return (
+    <BasicWrapper>
+      <CreateRoutinePageController apparatusName={apparatus} />
+    </BasicWrapper>
+  )
 }
 
 export default CreateRoutinePage

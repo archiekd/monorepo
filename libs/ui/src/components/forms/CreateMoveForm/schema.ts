@@ -1,6 +1,6 @@
 import { boolean, InferType, mixed, object, string } from "yup"
 
-import { ApparatusName, CopGroup, MoveValue } from "../../../../../../apps/web/src/generated/types"
+import { ApparatusName, CopGroup, MoveValue } from "@routine-lab/apollo-api"
 
 const oneOfEnum = <T>(enumObject: { [s: string]: T } | ArrayLike<T>) => {
   return mixed<T>().oneOf(Object.values(enumObject))

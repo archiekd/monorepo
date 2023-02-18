@@ -5,7 +5,6 @@
   "scripts": {
     "start": "doppler run -- nx run-many --target=serve",
     "storybook": "nx storybook ui",
-    "generate": "graphql-codegen",
     "build": "nx build",
     "test": "nx test"
   },
@@ -20,6 +19,7 @@
     "apollo-server-core": "3.10.1",
     "apollo-server-express": "3.10.1",
     "bcrypt": "^5.0.1",
+    "beautiful-react-hooks": "^3.12.2",
     "class-validator": "0.13.2",
     "cookie-parser": "1.4.6",
     "core-js": "^3.6.5",
@@ -46,7 +46,8 @@
     "typeorm": "0.2.45",
     "typeorm-typedi-extensions": "^0.4.1",
     "uuid": "^9.0.0",
-    "yup": "0.32.11"
+    "yup": "0.32.11",
+    "zod": "^3.20.6"
   },
   "devDependencies": {
     "@babel/core": "7.12.13",

@@ -12,6 +12,22 @@ export class MoveRepository extends AbstractRepository<Move> {
     return this.repository.findOne({ id })
   }
 
+  async findApparatusMoves(apparatus: Apparatus, searchInput?: string | null): Promise<Move[]> {
+    const query = this.repository
+      .createQueryBuilder("move")
+      .leftJoin("move.apparatus", "apparatus") // LEFT JOIN apparatus ON apparatus.id = move.apparatusId
+      .where("apparatus.id = :id", { id: apparatus.id })
+
+    console.log("searchInput", searchInput)
+    if (searchInput) {
+      query.andWhere(`move.description ILIKE :searchInput OR move."namedAfter" ILIKE :searchInput`, {
+        searchInput: `%${searchInput.trim()}%`
+      })
+    }
+
+    return query.getMany()
+  }
+
   async createMove(
     newMoveInput: Omit<NewMoveInput, "apparatus" | "copGroup">,
     apparatus: Apparatus,

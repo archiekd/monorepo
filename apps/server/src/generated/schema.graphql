@@ -1,6 +1,7 @@
 type Query {
   getCurrentUser: User
   getMove(id: String!): Move!
+  getApparatusMoves(searchInput: String, name: String!): [Move!]!
 }
 
 type User {
@@ -29,6 +30,7 @@ type Move {
   otherNames: [String!]!
   copGroup: CodeOfPointsGroup!
   letterValue: String!
+  pointValue: Float!
   copIndex: String
   isDoubleRotation: Boolean!
   apparatus: Apparatus!

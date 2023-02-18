@@ -1,4 +1,4 @@
-import { Field, ObjectType, registerEnumType } from "type-graphql"
+import { Field, Float, ObjectType, registerEnumType } from "type-graphql"
 import { TypeormLoader } from "type-graphql-dataloader"
 import { Column, CreateDateColumn, Entity, JoinTable, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm"
 
@@ -73,6 +73,11 @@ export class Move extends BaseModel {
   @Field()
   @Column()
   letterValue: MoveValue
+
+  @Field(() => Float)
+  pointValue(): number {
+    return moveValuePoint[this.letterValue]
+  }
 
   @Field({ nullable: true })
   @Column({ nullable: true })

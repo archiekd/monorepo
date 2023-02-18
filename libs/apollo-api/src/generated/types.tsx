@@ -105,6 +105,7 @@ export type Move = {
   letterValue: Scalars['String'];
   namedAfter?: Maybe<Scalars['String']>;
   otherNames: Array<Scalars['String']>;
+  pointValue: Scalars['Float'];
   routineMoves: Array<SavedRoutine>;
   updatedAt: Scalars['DateTime'];
   users: Array<User>;
@@ -164,8 +165,15 @@ export enum PointDeduction {
 
 export type Query = {
   __typename?: 'Query';
+  getApparatusMoves: Array<Move>;
   getCurrentUser?: Maybe<User>;
   getMove: Move;
+};
+
+
+export type QueryGetApparatusMovesArgs = {
+  name: Scalars['String'];
+  searchInput?: InputMaybe<Scalars['String']>;
 };
 
 
@@ -199,6 +207,14 @@ export type User = {
   superAdmin: Scalars['Boolean'];
   updatedAt: Scalars['DateTime'];
 };
+
+export type GetApparatusMovesQueryVariables = Exact<{
+  name: Scalars['String'];
+  searchInput?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type GetApparatusMovesQuery = { __typename?: 'Query', getApparatusMoves: Array<{ __typename?: 'Move', id: string, description: string, letterValue: string, pointValue: number }> };
 
 export type LoginMutationVariables = Exact<{
   email: Scalars['String'];
@@ -236,6 +252,45 @@ export const DefaultMoveValuesFragmentDoc = gql`
   description
 }
     `;
+export const GetApparatusMovesDocument = gql`
+    query getApparatusMoves($name: String!, $searchInput: String) {
+  getApparatusMoves(name: $name, searchInput: $searchInput) {
+    id
+    description
+    letterValue
+    pointValue
+  }
+}
+    `;
+
+/**
+ * __useGetApparatusMovesQuery__
+ *
+ * To run a query within a React component, call `useGetApparatusMovesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetApparatusMovesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetApparatusMovesQuery({
+ *   variables: {
+ *      name: // value for 'name'
+ *      searchInput: // value for 'searchInput'
+ *   },
+ * });
+ */
+export function useGetApparatusMovesQuery(baseOptions: Apollo.QueryHookOptions<GetApparatusMovesQuery, GetApparatusMovesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetApparatusMovesQuery, GetApparatusMovesQueryVariables>(GetApparatusMovesDocument, options);
+      }
+export function useGetApparatusMovesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetApparatusMovesQuery, GetApparatusMovesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetApparatusMovesQuery, GetApparatusMovesQueryVariables>(GetApparatusMovesDocument, options);
+        }
+export type GetApparatusMovesQueryHookResult = ReturnType<typeof useGetApparatusMovesQuery>;
+export type GetApparatusMovesLazyQueryHookResult = ReturnType<typeof useGetApparatusMovesLazyQuery>;
+export type GetApparatusMovesQueryResult = Apollo.QueryResult<GetApparatusMovesQuery, GetApparatusMovesQueryVariables>;
 export const LoginDocument = gql`
     mutation login($email: String!, $password: String!) {
   login(email: $email, password: $password) {

@@ -1,18 +1,15 @@
-import { ReactNode } from "react"
+import React, { ReactNode } from "react"
 
 import { Box } from "@mui/material"
 
-interface Props {
+type BasicWrapperProps = {
   children: ReactNode
 }
 
-export const GeneralWrapper = ({ children }: Props) => {
+const BasicWrapper: React.FC<BasicWrapperProps> = ({ children }) => {
   return (
     <Box
       sx={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "baseline",
         height: "calc(100vh - 65px)",
         padding: "5%"
       }}
@@ -21,3 +18,5 @@ export const GeneralWrapper = ({ children }: Props) => {
     </Box>
   )
 }
+
+export default BasicWrapper

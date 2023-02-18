@@ -1,10 +1,7 @@
-import React from "react"
-
 import { gql, useMutation } from "@apollo/client"
 
+import { CreateMoveDocument } from "@routine-lab/apollo-api"
 import { CreateMoveForm, GeneralWrapper } from "@routine-lab/ui"
-
-import { ApparatusName, CopGroup, CreateMoveDocument, MoveValue } from "../../generated/types"
 
 gql`
   mutation createMove($newMoveInput: NewMoveInput!) {
@@ -31,11 +28,11 @@ const CreateMovePage: React.FC = () => {
     await createMove({
       variables: {
         newMoveInput: {
-          apparatus: values.apparatus as ApparatusName,
-          copGroup: values.group as CopGroup,
+          apparatus: values.apparatus,
+          copGroup: values.group,
           description: values.description || "",
           isDoubleRotation: values.doubleRotation,
-          letterValue: values.value as MoveValue
+          letterValue: values.value
         }
       }
     })

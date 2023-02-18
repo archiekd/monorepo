@@ -2,25 +2,27 @@ import React from "react"
 
 import { Box, Typography } from "@mui/material"
 
-import { UiButton } from "../../ui"
+import { Move } from "@routine-lab/apollo-api"
+
+import { UiButton } from "../Button"
 
 type MoveCardProps = {
   id: string
   description: string
-  value: string
+  letterValue: string
   pointValue: number
-  onClick: (id: string) => void
+  onSelect: (id: string) => void
 }
 
-const MoveCard: React.FC<MoveCardProps> = ({ id, description, value, pointValue, onClick }) => {
+const MoveCard: React.FC<MoveCardProps> = ({ id, description, letterValue, pointValue, onSelect }) => {
   return (
     <UiButton
-      onClick={() => onClick(id)}
+      onClick={() => onSelect}
       sx={{ border: "solid 4px grey", height: "80px", width: "240px", borderRadius: "5px", display: "flex", padding: 0 }}
     >
       <Box display="flex" flexDirection="column" justifyContent="center" sx={{ borderRight: "solid 4px grey", height: "100%", width: "20%" }}>
         <Typography fontWeight={800} color="black">
-          {value}
+          {letterValue}
         </Typography>
         <Typography fontWeight={800} color="black">
           {pointValue}

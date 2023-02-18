@@ -10,11 +10,13 @@ const Template: ComponentStory<typeof StartValueBox> = (args) => <StartValueBox 
 
 export const WithValues = Template.bind({})
 WithValues.args = {
-  base: 10.0,
-  dScore: 2.7,
-  requirements: 2.5,
-  connections: 0.2,
-  totalStart: 15.4
+  eScore: 10,
+  dScore: {
+    movesScore: 2.3,
+    requirements: 2.5,
+    connections: 0.1
+  },
+  totalStart: 14.9
 }
 
 export const NoValues = Template.bind({})

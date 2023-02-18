@@ -8,21 +8,23 @@ import ScoreAddition from "./ScoreAddition"
 import { StartValueWrapper } from "./style"
 
 export type StartValueBoxProps = {
-  base: number
-  dScore: number
-  requirements: number
-  connections: number
+  eScore: number
+  dScore: {
+    requirements: number
+    connections: number
+    movesScore: number
+  }
   totalStart: number
 }
 
-export const StartValueBox: React.FC<StartValueBoxProps> = ({ base, dScore, requirements, connections, totalStart }) => {
+export const StartValueBox: React.FC<StartValueBoxProps> = ({ eScore, dScore, totalStart }) => {
   const theme = useTheme()
   return (
     <StartValueWrapper>
-      <ScoreAddition label="Base - " score={base} color="black" />
-      <ScoreAddition label="D score - " score={dScore} color="#dc5687" />
-      <ScoreAddition label="Requirements - " score={requirements} color="#56dc68" />
-      <ScoreAddition label="Connections - " score={connections} color="#dcab56" />
+      <ScoreAddition label="E Score - " score={eScore} color="black" />
+      <ScoreAddition label="Move total - " score={dScore.movesScore} color="#dc5687" />
+      <ScoreAddition label="Requirements - " score={dScore.requirements} color="#56dc68" />
+      <ScoreAddition label="Connections - " score={dScore.connections} color="#dcab56" />
       <Box
         sx={{ backgroundColor: theme.palette.primary.light, height: "60px" }}
         borderRadius="0 0 5px 5px"

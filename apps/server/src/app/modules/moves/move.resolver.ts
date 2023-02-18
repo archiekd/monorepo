@@ -26,6 +26,15 @@ export class MoveResolver {
     return move
   }
 
+  @Query(() => [Move])
+  async getApparatusMoves(@Arg("name") name: string, @Arg("searchInput", { nullable: true }) searchInput?: string | null): Promise<Move[]> {
+    const apparatus = await this.apparatusRepo.findByName(name)
+    if (!apparatus) throw new Error("No apparatus found with that name")
+
+    const apparatusMoves = await this.moveRepo.findApparatusMoves(apparatus, searchInput)
+    return apparatusMoves
+  }
+
   @Authorized()
   @Mutation(() => Move)
   async createMove(@Ctx() ctx: MyContext, @Arg("newMoveInput", () => NewMoveInput) newMoveInput: NewMoveInput): Promise<Move> {

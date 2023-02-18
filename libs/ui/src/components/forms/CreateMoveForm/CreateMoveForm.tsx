@@ -1,7 +1,8 @@
 import { yupResolver } from "@hookform/resolvers/yup"
 import { Stack } from "@mui/material"
-import { ApparatusName, CopGroup, MoveValue } from "apps/web/src/generated/types"
 import { Controller, SubmitHandler, useForm } from "react-hook-form"
+
+import { ApparatusName, CopGroup, MoveValue } from "@routine-lab/apollo-api"
 
 import { UiButton, UiTypography } from "../../ui"
 import { UiRadioGroup } from "../../ui/RadioGroup"
