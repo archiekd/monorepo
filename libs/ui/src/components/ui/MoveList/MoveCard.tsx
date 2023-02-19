@@ -17,8 +17,8 @@ type MoveCardProps = {
 const MoveCard: React.FC<MoveCardProps> = ({ id, description, letterValue, pointValue, onSelect }) => {
   return (
     <UiButton
-      onClick={() => onSelect}
-      sx={{ border: "solid 4px grey", height: "80px", width: "240px", borderRadius: "5px", display: "flex", padding: 0 }}
+      onClick={() => onSelect(id)}
+      sx={{ border: "solid 4px grey", height: "80px", width: "300px", borderRadius: "5px", display: "flex", padding: 0 }}
     >
       <Box display="flex" flexDirection="column" justifyContent="center" sx={{ borderRight: "solid 4px grey", height: "100%", width: "20%" }}>
         <Typography fontWeight={800} color="black">

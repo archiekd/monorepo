@@ -32,7 +32,7 @@ export const MoveListDrawer: React.FC<MoveListDrawerProps> = ({ isOpen, onClose,
         <SearchInput searchIcon onChange={(event) => onSearchDebounced(event.target.value)} />
         <Box display="flex" flexDirection="column" alignItems="flex-start">
           {moves.map((move) => {
-            return <MoveCard {...move} onSelect={onSelect} />
+            return <MoveCard key={move.id} {...move} onSelect={onSelect} />
           })}
         </Box>
       </Stack>

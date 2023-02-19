@@ -24,5 +24,46 @@ CreateRoutineFormStory.args = {
       connections: 0.1
     },
     totalStart: 14.9
-  }
+  },
+  routine: [
+    [
+      {
+        letterValue: "C",
+        moveDescription: "Test",
+        pointValue: 0.3
+      },
+      {
+        letterValue: "C",
+        moveDescription: "Test",
+        pointValue: 0.3
+      }
+    ],
+    {
+      letterValue: "C",
+      moveDescription: "Test",
+      pointValue: 0.3
+    },
+    {
+      letterValue: "C",
+      moveDescription: "Test",
+      pointValue: 0.3
+    },
+    [
+      {
+        letterValue: "C",
+        moveDescription: "Test",
+        pointValue: 0.3
+      },
+      {
+        letterValue: "C",
+        moveDescription: "Test",
+        pointValue: 0.3
+      }
+    ],
+    {
+      letterValue: "C",
+      moveDescription: "Test",
+      pointValue: 0.3
+    }
+  ]
 }

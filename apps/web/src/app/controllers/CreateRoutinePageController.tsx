@@ -49,6 +49,7 @@ const CreateRoutinePageController = ({ apparatusName }: Props) => {
           })
           setIsOpen(true)
         }}
+        routine={[]}
       />
       <MoveListDrawer
         isOpen={isOpen}
@@ -56,6 +57,7 @@ const CreateRoutinePageController = ({ apparatusName }: Props) => {
         onClose={() => setIsOpen(false)}
         onSelect={(move) => {
           console.log({ move })
+          setIsOpen(false)
         }}
         moves={data?.getApparatusMoves || []}
         onSearch={(input) =>

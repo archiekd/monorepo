@@ -11,11 +11,11 @@ const Template: ComponentStory<typeof MoveCard> = (args) => <MoveCard {...args} 
 export const Default = Template.bind({})
 
 Default.parameters = {
-  controls: { include: ["id", "description", "value", "pointValue"] }
+  controls: { include: ["id", "description", "letterValue", "pointValue"] }
 }
 Default.args = {
   id: "test-id",
   description: "Double salto w/ double twist",
-  value: "D",
+  letterValue: "D",
   pointValue: 0.4
 }

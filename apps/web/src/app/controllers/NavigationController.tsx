@@ -10,7 +10,5 @@ export const NavigationController = (props: Props) => {
 
   const activeItem = location.pathname.split("/")[1] ? location.pathname.split("/")[1] : "home"
 
-  console.log(activeItem, "activeItem")
-
   return <NavigationBar onClick={(path) => navigate(`/${path}`)} activeItem={activeItem} />
 }
