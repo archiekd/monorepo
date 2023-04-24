@@ -1,24 +1,12 @@
 import { useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { useParams } from "react-router-dom"
 
 import { gql } from "@apollo/client"
 
 import { useGetApparatusMovesLazyQuery } from "@routine-lab/apollo-api"
 import { CreateRoutineForm, MoveListDrawer } from "@routine-lab/ui"
 
-interface Props {
-  apparatusName: string
-}
-
-const startValue = {
-  eScore: 10,
-  dScore: {
-    movesScore: 2.3,
-    requirements: 2.5,
-    connections: 0.1
-  },
-  totalStart: 14.9
-}
+import { useActionsState } from "../hooks/useActionsState"
 
 gql`
   query getApparatusMoves($name: String!, $searchInput: String) {
@@ -31,39 +19,54 @@ gql`
   }
 `
 
-const CreateRoutinePageController = ({ apparatusName }: Props) => {
-  const [isOpen, setIsOpen] = useState(false)
+const startValue = {
+  eScore: 10,
+  dScore: {
+    movesScore: 2.3,
+    requirements: 2.5,
+    connections: 0.1
+  },
+  totalStart: 14.9
+}
+
+type Props = {
+  onSelect: (move: string) => Promise<void>
+  routine: any[]
+}
+
+export const RoutinePageController = ({ onSelect, routine = [] }: Props) => {
+  const { onOpen, onClose, isOpen } = useActionsState()
+  const { apparatus } = useParams()
 
   const [getMoves, { data, loading }] = useGetApparatusMovesLazyQuery()
-
   return (
     <>
       <CreateRoutineForm
-        title={apparatusName}
+        title={apparatus || ""}
         startValue={startValue}
         addMove={() => {
           getMoves({
             variables: {
-              name: apparatusName
+              name: apparatus || ""
             }
           })
-          setIsOpen(true)
+          onOpen()
         }}
-        routine={[]}
+        routine={routine}
       />
       <MoveListDrawer
         isOpen={isOpen}
         loading={loading}
-        onClose={() => setIsOpen(false)}
+        onClose={onClose}
         onSelect={(move) => {
-          console.log({ move })
-          setIsOpen(false)
+          onSelect(move)
+          onClose()
         }}
         moves={data?.getApparatusMoves || []}
         onSearch={(input) =>
           getMoves({
             variables: {
-              name: apparatusName,
+              name: apparatus || "",
               searchInput: input
             }
           })
@@ -72,5 +75,3 @@ const CreateRoutinePageController = ({ apparatusName }: Props) => {
     </>
   )
 }
-
-export default CreateRoutinePageController

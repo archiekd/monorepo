@@ -94,17 +94,6 @@ export class Move extends BaseModel {
 
   @Field(() => [SavedRoutine])
   @OneToMany(() => SavedRoutine, (savedRoutine) => savedRoutine.moves)
-  @JoinTable({
-    name: "routine_move",
-    joinColumn: {
-      name: "move_id",
-      referencedColumnName: "id"
-    },
-    inverseJoinColumn: {
-      name: "saved_routine_id",
-      referencedColumnName: "id"
-    }
-  })
   routineMoves: Promise<SavedRoutine[]>
 
   @TypeormLoader()

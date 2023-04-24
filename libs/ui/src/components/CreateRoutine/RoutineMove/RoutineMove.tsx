@@ -1,5 +1,5 @@
 import DragIndicatorIcon from "@mui/icons-material/DragIndicator"
-import { Box, IconButton, useTheme } from "@mui/material"
+import { Box, useTheme } from "@mui/material"
 
 import { UiTypography } from "../../ui"
 

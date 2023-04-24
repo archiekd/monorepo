@@ -2,6 +2,7 @@ import { Navigate, Route, Routes } from "react-router-dom"
 
 import CreateMovePage from "../pages/CreateMovePage"
 import CreateRoutinePage from "../pages/CreateRoutinePage"
+import { EditRoutinePage } from "../pages/EditRoutinePage"
 import ForgotPasswordPage from "../pages/ForgotPasswordPage"
 import HomePage from "../pages/HomePage"
 import LoginPage from "../pages/LoginPage"
@@ -24,7 +25,12 @@ const Router = () => {
         <Route path="/create-move" element={<CreateMovePage />} />
       </Route>
       <Route element={<PrivateRoute />}>
-        <Route path="/create-routine/:apparatus" element={<CreateRoutinePage />} />
+        <Route path="/routine">
+          <Route path=":apparatus">
+            <Route path="create" element={<CreateRoutinePage />} />
+            <Route path=":routineId" element={<EditRoutinePage />} />
+          </Route>
+        </Route>
       </Route>
       <Route path="*" element={<Navigate to="/login" />}></Route>
     </Routes>

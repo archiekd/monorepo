@@ -19,7 +19,7 @@
     "apollo-server-core": "3.10.1",
     "apollo-server-express": "3.10.1",
     "bcrypt": "^5.0.1",
-    "beautiful-react-hooks": "^3.12.2",
+    "beautiful-react-hooks": "^4.3.0",
     "class-validator": "0.13.2",
     "cookie-parser": "1.4.6",
     "core-js": "^3.6.5",

@@ -1,7 +1,6 @@
 import React, { ChangeEvent } from "react"
 
 import { Box, Drawer, Stack } from "@mui/material"
-import { useDebouncedCallback } from "beautiful-react-hooks"
 
 import { UiTypography } from "../ui"
 import MoveCard from "../ui/MoveList/MoveCard"
@@ -17,7 +16,7 @@ type MoveListDrawerProps = {
 }
 
 export const MoveListDrawer: React.FC<MoveListDrawerProps> = ({ isOpen, onClose, moves, onSelect, onSearch }) => {
-  const onSearchDebounced = useDebouncedCallback(onSearch, [onSearch], 200)
+  // const onSearchDebounced = useDebouncedCallback(onSearch, [onSearch], 200)
   return (
     <Drawer
       anchor="right"
@@ -29,7 +28,7 @@ export const MoveListDrawer: React.FC<MoveListDrawerProps> = ({ isOpen, onClose,
     >
       <Stack direction="column" spacing={3}>
         <UiTypography>Move List</UiTypography>
-        <SearchInput searchIcon onChange={(event) => onSearchDebounced(event.target.value)} />
+        <SearchInput searchIcon onChange={(event) => onSearch(event.target.value)} />
         <Box display="flex" flexDirection="column" alignItems="flex-start">
           {moves.map((move) => {
             return <MoveCard key={move.id} {...move} onSelect={onSelect} />

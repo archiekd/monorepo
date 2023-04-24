@@ -6,5 +6,5 @@ type Props = {}
 
 export default function HomeController({}: Props) {
   const navigate = useNavigate()
-  return <ApparatusPicker onSelect={(apparatus) => navigate(`/create-routine/${apparatus}`)} />
+  return <ApparatusPicker onSelect={(apparatus) => navigate(`/routine/${apparatus}/create`)} />
 }

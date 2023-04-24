@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom"
 
 import BasicWrapper from "libs/ui/src/components/wrappers/BasicWrapper/BasicWrapper"
 
-import CreateRoutinePageController from "../controllers/CreateRoutinePageController"
+import CreateRoutineController from "../controllers/CreateRoutineController"
 
 const CreateRoutinePage = () => {
   const { apparatus } = useParams()
@@ -11,7 +11,7 @@ const CreateRoutinePage = () => {
 
   return (
     <BasicWrapper>
-      <CreateRoutinePageController apparatusName={apparatus} />
+      <CreateRoutineController apparatusName={apparatus} />
     </BasicWrapper>
   )
 }

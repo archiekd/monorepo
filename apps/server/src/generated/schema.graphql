@@ -113,7 +113,9 @@ enum FIG {
 
 type SavedRoutine {
   id: String!
+  name: String!
   moves: [Move!]!
+  formatted_moves: [[String!]!]!
   user: User!
 }
 
@@ -127,6 +129,7 @@ type Mutation {
   login(password: String!, email: String!): User
   signup(password: String!, email: String!): User
   createMove(newMoveInput: NewMoveInput!): Move!
+  createRoutine(routineName: String, moveId: String!): SavedRoutine!
 }
 
 input NewMoveInput {
