@@ -2,6 +2,7 @@ type Query {
   getCurrentUser: User
   getMove(id: String!): Move!
   getApparatusMoves(searchInput: String, name: String!): [Move!]!
+  getRoutine(routineId: String!): SavedRoutine!
 }
 
 type User {

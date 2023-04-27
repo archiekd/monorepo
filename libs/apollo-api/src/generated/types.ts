@@ -175,6 +175,7 @@ export type Query = {
   getApparatusMoves: Array<Move>;
   getCurrentUser?: Maybe<User>;
   getMove: Move;
+  getRoutine: SavedRoutine;
 };
 
 
@@ -186,6 +187,11 @@ export type QueryGetApparatusMovesArgs = {
 
 export type QueryGetMoveArgs = {
   id: Scalars['String'];
+};
+
+
+export type QueryGetRoutineArgs = {
+  routineId: Scalars['String'];
 };
 
 export type SavedRoutine = {
@@ -231,6 +237,13 @@ export type CreateRoutineMutationVariables = Exact<{
 
 
 export type CreateRoutineMutation = { __typename?: 'Mutation', createRoutine: { __typename?: 'SavedRoutine', id: string } };
+
+export type GetRoutineQueryVariables = Exact<{
+  routineId: Scalars['String'];
+}>;
+
+
+export type GetRoutineQuery = { __typename?: 'Query', getRoutine: { __typename?: 'SavedRoutine', id: string, name: string, formatted_moves: Array<Array<string>>, moves: Array<{ __typename?: 'Move', id: string, namedAfter?: string | null }> } };
 
 export type LoginMutationVariables = Exact<{
   email: Scalars['String'];
@@ -336,6 +349,47 @@ export function useCreateRoutineMutation(baseOptions?: Apollo.MutationHookOption
 export type CreateRoutineMutationHookResult = ReturnType<typeof useCreateRoutineMutation>;
 export type CreateRoutineMutationResult = Apollo.MutationResult<CreateRoutineMutation>;
 export type CreateRoutineMutationOptions = Apollo.BaseMutationOptions<CreateRoutineMutation, CreateRoutineMutationVariables>;
+export const GetRoutineDocument = gql`
+    query getRoutine($routineId: String!) {
+  getRoutine(routineId: $routineId) {
+    id
+    name
+    moves {
+      id
+      namedAfter
+    }
+    formatted_moves
+  }
+}
+    `;
+
+/**
+ * __useGetRoutineQuery__
+ *
+ * To run a query within a React component, call `useGetRoutineQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetRoutineQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetRoutineQuery({
+ *   variables: {
+ *      routineId: // value for 'routineId'
+ *   },
+ * });
+ */
+export function useGetRoutineQuery(baseOptions: Apollo.QueryHookOptions<GetRoutineQuery, GetRoutineQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetRoutineQuery, GetRoutineQueryVariables>(GetRoutineDocument, options);
+      }
+export function useGetRoutineLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetRoutineQuery, GetRoutineQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetRoutineQuery, GetRoutineQueryVariables>(GetRoutineDocument, options);
+        }
+export type GetRoutineQueryHookResult = ReturnType<typeof useGetRoutineQuery>;
+export type GetRoutineLazyQueryHookResult = ReturnType<typeof useGetRoutineLazyQuery>;
+export type GetRoutineQueryResult = Apollo.QueryResult<GetRoutineQuery, GetRoutineQueryVariables>;
 export const LoginDocument = gql`
     mutation login($email: String!, $password: String!) {
   login(email: $email, password: $password) {

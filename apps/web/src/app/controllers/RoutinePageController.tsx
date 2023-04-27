@@ -32,22 +32,22 @@ const startValue = {
 type Props = {
   onSelect: (move: string) => Promise<void>
   routine: any[]
+  apparatusName: string
 }
 
-export const RoutinePageController = ({ onSelect, routine = [] }: Props) => {
+export const RoutinePageController = ({ onSelect, routine = [], apparatusName }: Props) => {
   const { onOpen, onClose, isOpen } = useActionsState()
-  const { apparatus } = useParams()
 
   const [getMoves, { data, loading }] = useGetApparatusMovesLazyQuery()
   return (
     <>
       <CreateRoutineForm
-        title={apparatus || ""}
+        title={apparatusName}
         startValue={startValue}
         addMove={() => {
           getMoves({
             variables: {
-              name: apparatus || ""
+              name: apparatusName
             }
           })
           onOpen()
@@ -66,7 +66,7 @@ export const RoutinePageController = ({ onSelect, routine = [] }: Props) => {
         onSearch={(input) =>
           getMoves({
             variables: {
-              name: apparatus || "",
+              name: apparatusName,
               searchInput: input
             }
           })

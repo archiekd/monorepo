@@ -5,7 +5,7 @@ schema: "apps/server/src/generated/schema.graphql"
 documents:
   - "apps/web/src/*/**/*.{ts,tsx,graphql}"
 generates:
-  libs/apollo-api/src/generated/types.tsx:
+  libs/apollo-api/src/generated/types.ts:
     plugins:
       - "typescript"
       - "typescript-operations"

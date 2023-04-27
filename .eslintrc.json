@@ -30,12 +30,7 @@
         ]
       }
     },
-    {"files": ["generated/*.ts"],
-  "rules": {
-    "max-lines": [
-      "off"
-    ]
-  }},
+   
     {
       "files": ["*.ts", "*.tsx"],
       "extends": ["plugin:@nrwl/nx/typescript"],
@@ -46,6 +41,5 @@
       "extends": ["plugin:@nrwl/nx/javascript"],
       "rules": {}
     }
-  ], 
-
+  ]
 }

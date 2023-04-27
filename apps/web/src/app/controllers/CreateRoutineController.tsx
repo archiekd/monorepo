@@ -33,6 +33,7 @@ const CreateRoutineController = ({ apparatusName }: Props) => {
         navigate(`/routine/${apparatusName}/${response.data?.createRoutine.id}`)
       }}
       routine={[]}
+      apparatusName={apparatusName}
     />
   )
 }

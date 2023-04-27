@@ -1,5 +1,5 @@
 import { AuthenticationError } from "apollo-server-express"
-import { Arg, Authorized, Ctx, Mutation, Resolver } from "type-graphql"
+import { Arg, Authorized, Ctx, Mutation, Query, Resolver } from "type-graphql"
 import { Service } from "typedi"
 import { InjectRepository } from "typeorm-typedi-extensions"
 
@@ -23,8 +23,15 @@ export class SavedRoutineResolver {
     const move = await this.moveRepo.findById(moveId)
     if (!move) throw new Error("Move not found")
 
-    console.log("move", move)
+    return this.savedRoutineRepo.createRoutine(move, { name: routineName || "Untitled Routine", formatted_moves: [[move.id]] })
+  }
 
-    return await this.savedRoutineRepo.createRoutine(move, { name: routineName || "Untitled Routine", formatted_moves: [[move.id]] })
+  @Authorized()
+  @Query(() => SavedRoutine)
+  async getRoutine(@Ctx() ctx: MyContext, @Arg("routineId") routineId: string) {
+    const user = ctx.getUser()
+    if (!user) throw new AuthenticationError("No user found")
+
+    return this.savedRoutineRepo.findById(routineId)
   }
 }
