@@ -23,7 +23,7 @@ export const ConnectionRoutineMove = ({ moves }: Props) => {
       <Box display="flex" justifyContent="center" alignItems="center" height="100%" width="90%">
         <Stack direction="column" spacing={2}>
           {moves.map((move) => (
-            <SingleMove {...move} />
+            <SingleMove {...move} key={move.id} />
           ))}
         </Stack>
       </Box>

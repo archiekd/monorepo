@@ -6,6 +6,7 @@ import { ConnectionRoutineMove } from "./ConnectionRoutineMove"
 import { RoutineMove } from "./RoutineMove"
 
 export type SingleMoveInfo = {
+  id: string
   letterValue: string
   description: string
   pointValue: number
@@ -14,9 +15,10 @@ export type SingleMoveInfo = {
 type Props = {
   routine: Array<SingleMoveInfo[]>
   addMove: () => void
+  onLinkSelect?: (index: number) => void
 }
 
-export const CreateRoutine = ({ routine, addMove }: Props) => {
+export const CreateRoutine = ({ routine, addMove, onLinkSelect }: Props) => {
   const theme = useTheme()
 
   return (
@@ -24,25 +26,29 @@ export const CreateRoutine = ({ routine, addMove }: Props) => {
       <Box height="85%" padding="20px" overflow="scroll">
         {routine.map((moves, index) => {
           const firstMove = { ...moves[0] }
+          const lastMove = index === routine.length - 1
+
           return (
-            <>
+            <Box key={firstMove.id + index}>
               {moves.length > 1 ? (
                 <Box width="100%" display="flex" justifyContent="center">
                   <ConnectionRoutineMove moves={moves} />
                 </Box>
               ) : (
                 <Box width="100%" display="flex" justifyContent="center">
-                  <RoutineMove {...firstMove} />
+                  <RoutineMove {...firstMove} key={firstMove.id} />
                 </Box>
               )}
-              {index !== routine.length - 1 ? (
+              {!lastMove && routine[index].length === 1 && index + 1 < routine.length && routine[index + 1].length === 1 ? (
                 <Box width="100%" display="flex" justifyContent="center">
-                  <IconButton>
+                  <IconButton onClick={() => onLinkSelect && onLinkSelect(index)}>
                     <LinkIcon sx={{ transform: "rotate(90deg)" }} />
                   </IconButton>
                 </Box>
-              ) : null}
-            </>
+              ) : (
+                <Box height="20px" />
+              )}
+            </Box>
           )
         })}
       </Box>

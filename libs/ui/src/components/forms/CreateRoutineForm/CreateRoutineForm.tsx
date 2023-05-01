@@ -11,12 +11,13 @@ type CreateRoutineFormProps = {
   title: string
   startValue: StartValueBoxProps
   routine: Array<SingleMoveInfo[]>
+  onLinkSelect?: (index: number) => void
 }
 
-export const CreateRoutineForm: React.FC<CreateRoutineFormProps> = ({ addMove, title, startValue, routine }) => {
+export const CreateRoutineForm: React.FC<CreateRoutineFormProps> = ({ addMove, title, startValue, routine, onLinkSelect }) => {
   return (
     <Box display="flex" justifyContent="space-evenly" height="100%" alignItems="center">
-      <CreateRoutine addMove={addMove} routine={routine} />
+      <CreateRoutine addMove={addMove} routine={routine} onLinkSelect={onLinkSelect} />
       <Box display="flex" flexDirection="column" justifyContent="space-evenly" height="70vh">
         <UiTypography fontWeight="900" size="5xl">
           {startCase(title)}

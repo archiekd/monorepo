@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
 import { useMemo } from "react"
 
 import { gql } from "@apollo/client"
@@ -48,13 +47,23 @@ export const EditRoutineController = ({ routineId, apparatusName }: Props) => {
   const routine = useMemo(() => {
     if (!data) return []
     return data.getRoutine.formatted_moves.map((moveIds) => {
-      return moveIds.map((moveId) => {
-        return data.getRoutine.moves.find((move) => move.id === moveId)
+      const moves = moveIds.map((moveId) => {
+        const foundMove = data.getRoutine.moves.find((move) => move.id === moveId)
+        return foundMove ? foundMove : null
       })
+
+      const filtered = moves.filter((move) => move !== null) as {
+        __typename?: "Move" | undefined
+        id: string
+        namedAfter?: string | null | undefined
+        letterValue: string
+        description: string
+        pointValue: number
+      }[]
+
+      return filtered
     })
   }, [data])
-
-  console.log({ routine })
 
   if (loading) return <CircularProgress />
 
@@ -72,6 +81,18 @@ export const EditRoutineController = ({ routineId, apparatusName }: Props) => {
         }
       }}
       routine={routine}
+      onLinkSelect={async (index) => {
+        try {
+          if (data?.getRoutine.formatted_moves) {
+            const newFormattedMoves = [...data.getRoutine.formatted_moves]
+            newFormattedMoves.splice(index, 2, [data.getRoutine.formatted_moves[index][0], data.getRoutine.formatted_moves[index + 1][0]])
+            await updateRoutine({ variables: { routineId: data.getRoutine.id, updatedRoutine: { formatted_moves: newFormattedMoves } } })
+            refetch()
+          }
+        } catch (error) {
+          console.error(error)
+        }
+      }}
     />
   )
 }
