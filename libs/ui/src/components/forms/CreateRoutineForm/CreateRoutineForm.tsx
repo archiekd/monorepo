@@ -4,13 +4,13 @@ import { Box } from "@mui/material"
 import { startCase } from "lodash"
 
 import { CreateRoutine, SingleMoveInfo, StartValueBox, StartValueBoxProps } from "../../CreateRoutine"
-import { UiButton, UiTypography } from "../../ui"
+import { UiTypography } from "../../ui"
 
 type CreateRoutineFormProps = {
   addMove: () => void
   title: string
   startValue: StartValueBoxProps
-  routine: Array<SingleMoveInfo[] | SingleMoveInfo>
+  routine: Array<SingleMoveInfo[]>
 }
 
 export const CreateRoutineForm: React.FC<CreateRoutineFormProps> = ({ addMove, title, startValue, routine }) => {

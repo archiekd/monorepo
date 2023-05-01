@@ -3,9 +3,9 @@ import { Box, useTheme } from "@mui/material"
 import { UiTypography } from "../../../ui"
 import { SingleMoveInfo } from "../../CreateRoutine"
 
-interface Props extends SingleMoveInfo {}
+type Props = SingleMoveInfo
 
-export const SingleMove = ({ moveDescription, letterValue, pointValue }: Props) => {
+export const SingleMove = ({ description, letterValue, pointValue }: Props) => {
   const theme = useTheme()
   return (
     <Box border={`2px solid ${theme.palette.primary.dark}`} height="50px" width="330px" borderRadius="5px" display="flex">
@@ -24,7 +24,7 @@ export const SingleMove = ({ moveDescription, letterValue, pointValue }: Props) 
 
       <Box display="flex" justifyContent="space-between" alignItems="center" width="100%" padding="10px">
         <UiTypography size="md">
-          {moveDescription} - {pointValue}
+          {description} - {pointValue}
         </UiTypography>
       </Box>
     </Box>

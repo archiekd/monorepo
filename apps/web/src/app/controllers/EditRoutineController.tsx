@@ -1,3 +1,5 @@
+import { useMemo } from "react"
+
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { gql } from "@apollo/client"
 import { CircularProgress } from "@mui/material"
@@ -14,6 +16,9 @@ gql`
       moves {
         id
         namedAfter
+        letterValue
+        description
+        pointValue
       }
       formatted_moves
     }
@@ -32,7 +37,18 @@ export const EditRoutineController = ({ routineId, apparatusName }: Props) => {
     }
   })
 
-  console.log("data", data)
+  const routine = useMemo(() => {
+    if (!data) return []
+    return data.getRoutine.formatted_moves.map((moveIds) => {
+      return moveIds.map((moveId) => {
+        return data.getRoutine.moves.find((move) => move.id === moveId)
+      })
+    })
+  }, [data])
+
+  console.log({ routine })
+
   if (loading) return <CircularProgress />
-  return <RoutinePageController apparatusName={apparatusName} onSelect={async (move) => {}} routine={[]} />
+
+  return <RoutinePageController apparatusName={apparatusName} onSelect={async (move) => {}} routine={routine} />
 }

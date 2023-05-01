@@ -2,15 +2,13 @@ import DragIndicatorIcon from "@mui/icons-material/DragIndicator"
 import { Box, useTheme } from "@mui/material"
 
 import { UiTypography } from "../../ui"
+import { SingleMoveInfo } from "../CreateRoutine"
 
-type Props = {
-  letterValue: string
-  moveDescription: string
-  pointValue: number
-}
+type Props = SingleMoveInfo
 
-export const RoutineMove = ({ moveDescription, letterValue, pointValue }: Props) => {
+export const RoutineMove = ({ description, letterValue, pointValue }: Props) => {
   const theme = useTheme()
+
   return (
     <Box border={`2px solid ${theme.palette.primary.dark}`} height="50px" width="400px" borderRadius="5px" display="flex">
       <Box
@@ -28,7 +26,7 @@ export const RoutineMove = ({ moveDescription, letterValue, pointValue }: Props)
 
       <Box display="flex" justifyContent="space-between" alignItems="center" width="100%" padding="10px">
         <UiTypography size="lg">
-          {moveDescription} - {pointValue}
+          {description} - {pointValue}
         </UiTypography>
         <DragIndicatorIcon color="inherit" />
       </Box>

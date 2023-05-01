@@ -243,7 +243,7 @@ export type GetRoutineQueryVariables = Exact<{
 }>;
 
 
-export type GetRoutineQuery = { __typename?: 'Query', getRoutine: { __typename?: 'SavedRoutine', id: string, name: string, formatted_moves: Array<Array<string>>, moves: Array<{ __typename?: 'Move', id: string, namedAfter?: string | null }> } };
+export type GetRoutineQuery = { __typename?: 'Query', getRoutine: { __typename?: 'SavedRoutine', id: string, name: string, formatted_moves: Array<Array<string>>, moves: Array<{ __typename?: 'Move', id: string, namedAfter?: string | null, letterValue: string, description: string, pointValue: number }> } };
 
 export type LoginMutationVariables = Exact<{
   email: Scalars['String'];
@@ -357,6 +357,9 @@ export const GetRoutineDocument = gql`
     moves {
       id
       namedAfter
+      letterValue
+      description
+      pointValue
     }
     formatted_moves
   }
