@@ -129,6 +129,7 @@ export type Mutation = {
   login?: Maybe<User>;
   logout: Scalars['Boolean'];
   signup?: Maybe<User>;
+  updateRoutine: SavedRoutine;
 };
 
 
@@ -152,6 +153,12 @@ export type MutationLoginArgs = {
 export type MutationSignupArgs = {
   email: Scalars['String'];
   password: Scalars['String'];
+};
+
+
+export type MutationUpdateRoutineArgs = {
+  routineId: Scalars['String'];
+  updatedRoutine: UpdateRoutineInput;
 };
 
 export type NewMoveInput = {
@@ -203,6 +210,12 @@ export type SavedRoutine = {
   user: User;
 };
 
+export type UpdateRoutineInput = {
+  formatted_moves?: InputMaybe<Array<Array<Scalars['String']>>>;
+  move?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+};
+
 export type User = {
   __typename?: 'User';
   apparatusCreated: Array<CodeOfPoints>;
@@ -244,6 +257,14 @@ export type GetRoutineQueryVariables = Exact<{
 
 
 export type GetRoutineQuery = { __typename?: 'Query', getRoutine: { __typename?: 'SavedRoutine', id: string, name: string, formatted_moves: Array<Array<string>>, moves: Array<{ __typename?: 'Move', id: string, namedAfter?: string | null, letterValue: string, description: string, pointValue: number }> } };
+
+export type UpdateRoutineMutationVariables = Exact<{
+  routineId: Scalars['String'];
+  updatedRoutine: UpdateRoutineInput;
+}>;
+
+
+export type UpdateRoutineMutation = { __typename?: 'Mutation', updateRoutine: { __typename?: 'SavedRoutine', id: string } };
 
 export type LoginMutationVariables = Exact<{
   email: Scalars['String'];
@@ -393,6 +414,40 @@ export function useGetRoutineLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions
 export type GetRoutineQueryHookResult = ReturnType<typeof useGetRoutineQuery>;
 export type GetRoutineLazyQueryHookResult = ReturnType<typeof useGetRoutineLazyQuery>;
 export type GetRoutineQueryResult = Apollo.QueryResult<GetRoutineQuery, GetRoutineQueryVariables>;
+export const UpdateRoutineDocument = gql`
+    mutation updateRoutine($routineId: String!, $updatedRoutine: UpdateRoutineInput!) {
+  updateRoutine(routineId: $routineId, updatedRoutine: $updatedRoutine) {
+    id
+  }
+}
+    `;
+export type UpdateRoutineMutationFn = Apollo.MutationFunction<UpdateRoutineMutation, UpdateRoutineMutationVariables>;
+
+/**
+ * __useUpdateRoutineMutation__
+ *
+ * To run a mutation, you first call `useUpdateRoutineMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateRoutineMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateRoutineMutation, { data, loading, error }] = useUpdateRoutineMutation({
+ *   variables: {
+ *      routineId: // value for 'routineId'
+ *      updatedRoutine: // value for 'updatedRoutine'
+ *   },
+ * });
+ */
+export function useUpdateRoutineMutation(baseOptions?: Apollo.MutationHookOptions<UpdateRoutineMutation, UpdateRoutineMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateRoutineMutation, UpdateRoutineMutationVariables>(UpdateRoutineDocument, options);
+      }
+export type UpdateRoutineMutationHookResult = ReturnType<typeof useUpdateRoutineMutation>;
+export type UpdateRoutineMutationResult = Apollo.MutationResult<UpdateRoutineMutation>;
+export type UpdateRoutineMutationOptions = Apollo.BaseMutationOptions<UpdateRoutineMutation, UpdateRoutineMutationVariables>;
 export const LoginDocument = gql`
     mutation login($email: String!, $password: String!) {
   login(email: $email, password: $password) {

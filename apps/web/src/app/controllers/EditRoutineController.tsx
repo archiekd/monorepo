@@ -1,10 +1,10 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import { useMemo } from "react"
 
-/* eslint-disable @typescript-eslint/no-empty-function */
 import { gql } from "@apollo/client"
 import { CircularProgress } from "@mui/material"
 
-import { useGetRoutineQuery } from "@routine-lab/apollo-api"
+import { useGetRoutineQuery, useUpdateRoutineMutation } from "@routine-lab/apollo-api"
 
 import { RoutinePageController } from "./RoutinePageController"
 
@@ -23,6 +23,12 @@ gql`
       formatted_moves
     }
   }
+
+  mutation updateRoutine($routineId: String!, $updatedRoutine: UpdateRoutineInput!) {
+    updateRoutine(routineId: $routineId, updatedRoutine: $updatedRoutine) {
+      id
+    }
+  }
 `
 
 type Props = {
@@ -31,11 +37,13 @@ type Props = {
 }
 
 export const EditRoutineController = ({ routineId, apparatusName }: Props) => {
-  const { data, loading } = useGetRoutineQuery({
+  const { data, loading, refetch } = useGetRoutineQuery({
     variables: {
       routineId: routineId
     }
   })
+
+  const [updateRoutine] = useUpdateRoutineMutation()
 
   const routine = useMemo(() => {
     if (!data) return []
@@ -50,5 +58,20 @@ export const EditRoutineController = ({ routineId, apparatusName }: Props) => {
 
   if (loading) return <CircularProgress />
 
-  return <RoutinePageController apparatusName={apparatusName} onSelect={async (move) => {}} routine={routine} />
+  return (
+    <RoutinePageController
+      apparatusName={apparatusName}
+      onSelect={async (move) => {
+        try {
+          if (data?.getRoutine.id) {
+            await updateRoutine({ variables: { routineId: data.getRoutine.id, updatedRoutine: { move } } })
+            refetch()
+          }
+        } catch (error) {
+          console.error(error)
+        }
+      }}
+      routine={routine}
+    />
+  )
 }

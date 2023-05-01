@@ -131,6 +131,7 @@ type Mutation {
   signup(password: String!, email: String!): User
   createMove(newMoveInput: NewMoveInput!): Move!
   createRoutine(routineName: String, moveId: String!): SavedRoutine!
+  updateRoutine(updatedRoutine: UpdateRoutineInput!, routineId: String!): SavedRoutine!
 }
 
 input NewMoveInput {
@@ -159,4 +160,10 @@ enum CopGroup {
   III
   IV
   V
+}
+
+input UpdateRoutineInput {
+  name: String
+  move: String
+  formatted_moves: [[String!]!]
 }

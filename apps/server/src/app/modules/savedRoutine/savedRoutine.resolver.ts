@@ -7,6 +7,7 @@ import { SavedRoutine } from "../../models/SavedRoutine"
 import { MoveRepository } from "../../repositories/MoveRepository"
 import { SavedRoutineRepository } from "../../repositories/SavedRoutineRepository"
 import { MyContext } from "../../types/MyContext"
+import { UpdateRoutineInput } from "./types"
 
 @Service()
 @Resolver()
@@ -32,5 +33,19 @@ export class SavedRoutineResolver {
     if (!user) throw new AuthenticationError("No user found")
 
     return this.savedRoutineRepo.findById(routineId)
+  }
+
+  @Authorized()
+  @Mutation(() => SavedRoutine)
+  async updateRoutine(@Ctx() ctx: MyContext, @Arg("routineId") routineId: string, @Arg("updatedRoutine") updatedRoutine: UpdateRoutineInput) {
+    const user = ctx.getUser()
+    if (!user) throw new AuthenticationError("No user found")
+
+    const routine = await this.savedRoutineRepo.findById(routineId)
+    if (!routine) throw new AuthenticationError("Could not find routine to update")
+
+    const move = await this.moveRepo.findById(updatedRoutine.move)
+
+    return this.savedRoutineRepo.updateRoutine(routine, { formatted_moves: updatedRoutine.formatted_moves, name: updatedRoutine.name }, move)
   }
 }
