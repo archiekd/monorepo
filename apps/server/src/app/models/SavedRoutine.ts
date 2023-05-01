@@ -23,7 +23,7 @@ export class SavedRoutine extends BaseModel {
   @JoinTable({
     name: "routine_move",
     joinColumn: {
-      name: "saved_routine_id",
+      name: "routine_move_id",
       referencedColumnName: "id"
     },
     inverseJoinColumn: {
@@ -35,7 +35,7 @@ export class SavedRoutine extends BaseModel {
 
   @Field(() => [[String]])
   @Column("jsonb")
-  formatted_moves: Array<String[]>
+  formatted_moves: Array<string[]>
 
   @TypeormLoader()
   @Field(() => User)

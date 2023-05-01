@@ -3,7 +3,6 @@ import { Arg, Authorized, Ctx, Mutation, Query, Resolver } from "type-graphql"
 import { Service } from "typedi"
 import { InjectRepository } from "typeorm-typedi-extensions"
 
-import { Move } from "../../models/Move"
 import { SavedRoutine } from "../../models/SavedRoutine"
 import { MoveRepository } from "../../repositories/MoveRepository"
 import { SavedRoutineRepository } from "../../repositories/SavedRoutineRepository"

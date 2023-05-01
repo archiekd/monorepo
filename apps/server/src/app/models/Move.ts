@@ -1,6 +1,6 @@
 import { Field, Float, ObjectType, registerEnumType } from "type-graphql"
 import { TypeormLoader } from "type-graphql-dataloader"
-import { Column, CreateDateColumn, Entity, JoinTable, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm"
+import { Column, CreateDateColumn, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm"
 
 import { BaseModel } from "../core/BaseModel"
 import { Apparatus } from "./Apparatus"
@@ -93,7 +93,7 @@ export class Move extends BaseModel {
   apparatus: Promise<Apparatus>
 
   @Field(() => [SavedRoutine])
-  @OneToMany(() => SavedRoutine, (savedRoutine) => savedRoutine.moves)
+  @ManyToMany(() => SavedRoutine, (savedRoutine) => savedRoutine.moves)
   routineMoves: Promise<SavedRoutine[]>
 
   @TypeormLoader()

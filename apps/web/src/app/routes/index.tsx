@@ -18,13 +18,12 @@ const Router = () => {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
       </Route>
+
       <Route element={<PrivateRoute />}>
         <Route path="/" element={<HomePage />} />
-      </Route>
-      <Route element={<PrivateRoute />}>
+
         <Route path="/create-move" element={<CreateMovePage />} />
-      </Route>
-      <Route element={<PrivateRoute />}>
+
         <Route path="/routine">
           <Route path=":apparatus">
             <Route path="create" element={<CreateRoutinePage />} />
@@ -32,6 +31,7 @@ const Router = () => {
           </Route>
         </Route>
       </Route>
+
       <Route path="*" element={<Navigate to="/login" />}></Route>
     </Routes>
   )
