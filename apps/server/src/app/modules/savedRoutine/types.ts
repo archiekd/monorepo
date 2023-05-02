@@ -19,9 +19,6 @@ export class UpdateRoutineInput {
   @Field(() => String, { nullable: true })
   name?: string
 
-  @Field(() => String, { nullable: true })
-  move?: string
-
   @Field(() => [[String]], { nullable: true })
   formatted_moves?: Array<string[]>
 }

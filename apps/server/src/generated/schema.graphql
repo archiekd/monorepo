@@ -164,6 +164,5 @@ enum CopGroup {
 
 input UpdateRoutineInput {
   name: String
-  move: String
   formatted_moves: [[String!]!]
 }

@@ -1,8 +1,10 @@
-import { AbstractRepository, EntityRepository } from "typeorm"
+import { uniq } from "lodash"
+import { AbstractRepository, EntityRepository, getCustomRepository } from "typeorm"
 
 import { Move } from "../models/Move"
 import { SavedRoutine } from "../models/SavedRoutine"
 import { NewRoutineInput, UpdateRoutineInput } from "../modules/savedRoutine/types"
+import { MoveRepository } from "./MoveRepository"
 
 @EntityRepository(SavedRoutine)
 export class SavedRoutineRepository extends AbstractRepository<SavedRoutine> {
@@ -16,15 +18,18 @@ export class SavedRoutineRepository extends AbstractRepository<SavedRoutine> {
     return this.repository.save(routine)
   }
 
-  async updateRoutine(routine: SavedRoutine, updatedRoutine: Omit<UpdateRoutineInput, "move">, move: Move) {
+  async updateRoutine(routine: SavedRoutine, updatedRoutine: UpdateRoutineInput) {
     if (updatedRoutine.name) routine.name = updatedRoutine.name
 
-    if (move) {
-      ;(await routine.moves).push(move)
-      routine.formatted_moves.push([move.id])
-    }
+    if (updatedRoutine.formatted_moves) {
+      const newMoves = uniq(updatedRoutine.formatted_moves.flat())
 
-    if (updatedRoutine.formatted_moves) routine.formatted_moves = updatedRoutine.formatted_moves
+      const moveRepo = getCustomRepository(MoveRepository)
+      const moves = moveRepo.findManyByIds(newMoves)
+
+      routine.moves = moves
+      routine.formatted_moves = updatedRoutine.formatted_moves
+    }
 
     return this.repository.save(routine)
   }

@@ -1,4 +1,4 @@
-import { AbstractRepository, EntityRepository, getCustomRepository } from "typeorm"
+import { AbstractRepository, EntityRepository, In } from "typeorm"
 
 import { Apparatus } from "../models/Apparatus"
 import { CodeOfPointsGroup } from "../models/CodeOfPointsGroup"
@@ -10,6 +10,10 @@ import { NewMoveInput } from "../modules/moves/types"
 export class MoveRepository extends AbstractRepository<Move> {
   async findById(id: string): Promise<Move | undefined> {
     return this.repository.findOne({ id })
+  }
+
+  async findManyByIds(ids: string[]): Promise<Move[] | undefined> {
+    return this.repository.find({ where: { id: In(ids) } })
   }
 
   async findApparatusMoves(apparatus: Apparatus, searchInput?: string | null): Promise<Move[]> {

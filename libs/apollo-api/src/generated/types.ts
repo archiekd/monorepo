@@ -212,7 +212,6 @@ export type SavedRoutine = {
 
 export type UpdateRoutineInput = {
   formatted_moves?: InputMaybe<Array<Array<Scalars['String']>>>;
-  move?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
 };
 

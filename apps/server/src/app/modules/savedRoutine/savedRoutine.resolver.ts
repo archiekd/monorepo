@@ -44,8 +44,6 @@ export class SavedRoutineResolver {
     const routine = await this.savedRoutineRepo.findById(routineId)
     if (!routine) throw new AuthenticationError("Could not find routine to update")
 
-    const move = await this.moveRepo.findById(updatedRoutine.move)
-
-    return this.savedRoutineRepo.updateRoutine(routine, { formatted_moves: updatedRoutine.formatted_moves, name: updatedRoutine.name }, move)
+    return this.savedRoutineRepo.updateRoutine(routine, { formatted_moves: updatedRoutine.formatted_moves, name: updatedRoutine.name })
   }
 }

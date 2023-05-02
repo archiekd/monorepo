@@ -3,7 +3,7 @@ import { useMemo } from "react"
 import { gql } from "@apollo/client"
 import { CircularProgress } from "@mui/material"
 
-import { useGetRoutineQuery, useUpdateRoutineMutation } from "@routine-lab/apollo-api"
+import { GetRoutineQuery, useGetRoutineQuery, useUpdateRoutineMutation } from "@routine-lab/apollo-api"
 
 import { RoutinePageController } from "./RoutinePageController"
 
@@ -52,14 +52,7 @@ export const EditRoutineController = ({ routineId, apparatusName }: Props) => {
         return foundMove ? foundMove : null
       })
 
-      const filtered = moves.filter((move) => move !== null) as {
-        __typename?: "Move" | undefined
-        id: string
-        namedAfter?: string | null | undefined
-        letterValue: string
-        description: string
-        pointValue: number
-      }[]
+      const filtered = moves.filter((move): move is GetRoutineQuery["getRoutine"]["moves"][number] => move !== null)
 
       return filtered
     })
@@ -73,7 +66,9 @@ export const EditRoutineController = ({ routineId, apparatusName }: Props) => {
       onSelect={async (move) => {
         try {
           if (data?.getRoutine.id) {
-            await updateRoutine({ variables: { routineId: data.getRoutine.id, updatedRoutine: { move } } })
+            await updateRoutine({
+              variables: { routineId: data.getRoutine.id, updatedRoutine: { formatted_moves: [...data.getRoutine.formatted_moves, [move]] } }
+            })
             refetch()
           }
         } catch (error) {
