@@ -2,9 +2,7 @@ import { useLocation, useNavigate } from "react-router-dom"
 
 import { NavigationBar } from "@routine-lab/ui"
 
-type Props = {}
-
-export const NavigationController = (props: Props) => {
+export const NavigationController = () => {
   const navigate = useNavigate()
   const location = useLocation()
 

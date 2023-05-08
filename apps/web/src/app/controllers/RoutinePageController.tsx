@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client"
 
 import { useGetApparatusMovesLazyQuery } from "@routine-lab/apollo-api"
-import { CreateRoutineForm, MoveListDrawer, SingleMoveInfo } from "@routine-lab/ui"
+import { CreateRoutineForm, MoveInfo, MoveListDrawer } from "@routine-lab/ui"
 
 import { useActionsState } from "../hooks/useActionsState"
 
@@ -28,12 +28,13 @@ const startValue = {
 
 type Props = {
   onSelect: (move: string) => Promise<void>
-  routine: Array<SingleMoveInfo[]>
+  routine: MoveInfo[]
   apparatusName: string
   onLinkSelect?: (index: number) => void
+  onReorder?: (routine: any) => void
 }
 
-export const RoutinePageController = ({ onSelect, routine = [], apparatusName, onLinkSelect }: Props) => {
+export const RoutinePageController = ({ onSelect, routine = [], apparatusName, onLinkSelect, onReorder }: Props) => {
   const { onOpen, onClose, isOpen } = useActionsState()
 
   const [getMoves, { data, loading }] = useGetApparatusMovesLazyQuery()
@@ -52,6 +53,7 @@ export const RoutinePageController = ({ onSelect, routine = [], apparatusName, o
         }}
         routine={routine}
         onLinkSelect={onLinkSelect}
+        onReorder={onReorder}
       />
       <MoveListDrawer
         isOpen={isOpen}

@@ -2,6 +2,7 @@ import { AuthenticationError } from "apollo-server-express"
 import { Arg, Authorized, Ctx, Mutation, Query, Resolver } from "type-graphql"
 import { Service } from "typedi"
 import { InjectRepository } from "typeorm-typedi-extensions"
+import { v4 as uuid4 } from "uuid"
 
 import { SavedRoutine } from "../../models/SavedRoutine"
 import { MoveRepository } from "../../repositories/MoveRepository"
@@ -23,7 +24,10 @@ export class SavedRoutineResolver {
     const move = await this.moveRepo.findById(moveId)
     if (!move) throw new Error("Move not found")
 
-    return this.savedRoutineRepo.createRoutine(move, { name: routineName || "Untitled Routine", formatted_moves: [[move.id]] })
+    return this.savedRoutineRepo.createRoutine(move, {
+      name: routineName || "Untitled Routine",
+      formatted_moves: [{ id: uuid4(), moves: [move.id] }]
+    })
   }
 
   @Authorized()

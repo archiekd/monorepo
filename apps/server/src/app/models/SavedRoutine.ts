@@ -33,12 +33,21 @@ export class SavedRoutine extends BaseModel {
   })
   moves: Promise<Move[]>
 
-  @Field(() => [[String]])
+  @Field(() => [FormattedMovesType])
   @Column("jsonb")
-  formatted_moves: Array<string[]>
+  formatted_moves: FormattedMovesType[]
 
   @TypeormLoader()
   @Field(() => User)
   @OneToMany(() => User, (user) => user.savedRoutines)
   user: Promise<User>
+}
+
+@ObjectType()
+export class FormattedMovesType {
+  @Field(() => String, { nullable: false })
+  id: string
+
+  @Field(() => [String], { nullable: false })
+  moves: string[]
 }

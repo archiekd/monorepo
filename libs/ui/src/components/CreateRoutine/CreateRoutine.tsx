@@ -1,9 +1,12 @@
+import { useMemo, useState } from "react"
+
+import { Active, closestCenter, DndContext, KeyboardSensor, PointerSensor, useSensor, useSensors } from "@dnd-kit/core"
+import { arrayMove, SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy } from "@dnd-kit/sortable"
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline"
 import LinkIcon from "@mui/icons-material/Link"
 import { Box, IconButton, useTheme } from "@mui/material"
 
-import { ConnectionRoutineMove } from "./ConnectionRoutineMove"
-import { RoutineMove } from "./RoutineMove"
+import { SortableMoveItem } from "./SortableMoveItem"
 
 export type SingleMoveInfo = {
   id: string
@@ -12,45 +15,75 @@ export type SingleMoveInfo = {
   pointValue: number
 }
 
-type Props = {
-  routine: Array<SingleMoveInfo[]>
-  addMove: () => void
-  onLinkSelect?: (index: number) => void
+export type MoveInfo = {
+  id: string
+  moves: SingleMoveInfo[]
 }
 
-export const CreateRoutine = ({ routine, addMove, onLinkSelect }: Props) => {
+type Props = {
+  routine: MoveInfo[]
+  addMove: () => void
+  onLinkSelect?: (index: number) => void
+  onReorder?: (routine: any) => void
+}
+
+export const CreateRoutine = ({ routine, addMove, onLinkSelect, onReorder }: Props) => {
+  const [active, setActive] = useState<Active | null>(null)
+
   const theme = useTheme()
+  const activeItem = useMemo(() => routine.find((item) => item.id === active?.id), [active, routine])
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates
+    })
+  )
 
   return (
     <Box sx={{ background: theme.palette.grey[100] }} height="70vh" width="40vw" display="flex" flexDirection="column" box-shadow={theme.shadows[11]}>
       <Box height="85%" padding="20px" overflow="scroll">
-        {routine.map((moves, index) => {
-          const firstMove = { ...moves[0] }
-          const lastMove = index === routine.length - 1
+        <DndContext
+          sensors={sensors}
+          onDragStart={({ active }) => {
+            setActive(active)
+          }}
+          collisionDetection={closestCenter}
+          onDragEnd={({ active, over }) => {
+            if (over && active.id !== over?.id) {
+              const activeIndex = routine.findIndex((item) => item.id === active.id)
+              const overIndex = routine.findIndex((item) => item.id === over.id)
 
-          return (
-            <Box key={firstMove.id + index}>
-              {moves.length > 1 ? (
-                <Box width="100%" display="flex" justifyContent="center">
-                  <ConnectionRoutineMove moves={moves} />
-                </Box>
-              ) : (
-                <Box width="100%" display="flex" justifyContent="center">
-                  <RoutineMove {...firstMove} key={firstMove.id} />
-                </Box>
-              )}
-              {!lastMove && routine[index].length === 1 && index + 1 < routine.length && routine[index + 1].length === 1 ? (
-                <Box width="100%" display="flex" justifyContent="center">
-                  <IconButton onClick={() => onLinkSelect && onLinkSelect(index)}>
-                    <LinkIcon sx={{ transform: "rotate(90deg)" }} />
-                  </IconButton>
-                </Box>
-              ) : (
-                <Box height="20px" />
-              )}
-            </Box>
-          )
-        })}
+              onReorder && onReorder(arrayMove(routine, activeIndex, overIndex))
+            }
+            setActive(null)
+          }}
+          onDragCancel={() => {
+            setActive(null)
+          }}
+        >
+          <SortableContext items={routine.map((moves) => moves.id)} strategy={verticalListSortingStrategy}>
+            {routine.map(({ moves, id }, index) => {
+              const lastMove = index === routine.length - 1
+              const shouldShowLinkIcon =
+                !lastMove && routine[index].moves.length === 1 && index + 1 < routine.length && routine[index + 1].moves.length === 1
+
+              return (
+                <>
+                  <SortableMoveItem key={id} id={id} moves={moves} onLinkSelect={onLinkSelect} />
+                  {shouldShowLinkIcon ? (
+                    <Box width="100%" display="flex" justifyContent="center">
+                      <IconButton onClick={() => onLinkSelect?.(index)}>
+                        <LinkIcon sx={{ transform: "rotate(90deg)" }} />
+                      </IconButton>
+                    </Box>
+                  ) : (
+                    <Box height="20px" />
+                  )}
+                </>
+              )
+            })}
+          </SortableContext>
+        </DndContext>
       </Box>
       <Box display="flex" justifyContent="center" alignItems="center" height="15%">
         <IconButton aria-label="delete" size="small" onClick={addMove}>

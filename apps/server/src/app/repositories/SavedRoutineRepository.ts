@@ -22,7 +22,12 @@ export class SavedRoutineRepository extends AbstractRepository<SavedRoutine> {
     if (updatedRoutine.name) routine.name = updatedRoutine.name
 
     if (updatedRoutine.formatted_moves) {
-      const newMoves = uniq(updatedRoutine.formatted_moves.flat())
+      const extractedMoves = updatedRoutine.formatted_moves.reduce((acc, curr) => {
+        acc.push(curr.moves)
+        return acc
+      }, [])
+
+      const newMoves = uniq(extractedMoves.flat())
 
       const moveRepo = getCustomRepository(MoveRepository)
       const moves = moveRepo.findManyByIds(newMoves)

@@ -2,8 +2,11 @@ import { useMemo } from "react"
 
 import { gql } from "@apollo/client"
 import { CircularProgress } from "@mui/material"
+import { cloneDeep } from "lodash"
+import { v4 as uuid4 } from "uuid"
 
 import { GetRoutineQuery, useGetRoutineQuery, useUpdateRoutineMutation } from "@routine-lab/apollo-api"
+import { MoveInfo } from "@routine-lab/ui"
 
 import { RoutinePageController } from "./RoutinePageController"
 
@@ -19,13 +22,20 @@ gql`
         description
         pointValue
       }
-      formatted_moves
+      formatted_moves {
+        id
+        moves
+      }
     }
   }
 
   mutation updateRoutine($routineId: String!, $updatedRoutine: UpdateRoutineInput!) {
     updateRoutine(routineId: $routineId, updatedRoutine: $updatedRoutine) {
       id
+      formatted_moves {
+        id
+        moves
+      }
     }
   }
 `
@@ -47,14 +57,14 @@ export const EditRoutineController = ({ routineId, apparatusName }: Props) => {
   const routine = useMemo(() => {
     if (!data) return []
     return data.getRoutine.formatted_moves.map((moveIds) => {
-      const moves = moveIds.map((moveId) => {
+      const moves = moveIds.moves.map((moveId) => {
         const foundMove = data.getRoutine.moves.find((move) => move.id === moveId)
         return foundMove ? foundMove : null
       })
 
       const filtered = moves.filter((move): move is GetRoutineQuery["getRoutine"]["moves"][number] => move !== null)
 
-      return filtered
+      return { ...moveIds, moves: filtered }
     })
   }, [data])
 
@@ -67,7 +77,10 @@ export const EditRoutineController = ({ routineId, apparatusName }: Props) => {
         try {
           if (data?.getRoutine.id) {
             await updateRoutine({
-              variables: { routineId: data.getRoutine.id, updatedRoutine: { formatted_moves: [...data.getRoutine.formatted_moves, [move]] } }
+              variables: {
+                routineId: data.getRoutine.id,
+                updatedRoutine: { formatted_moves: [...data.getRoutine.formatted_moves, { id: uuid4(), moves: [move] }] }
+              }
             })
             refetch()
           }
@@ -77,11 +90,38 @@ export const EditRoutineController = ({ routineId, apparatusName }: Props) => {
       }}
       routine={routine}
       onLinkSelect={async (index) => {
+        console.log("index", index)
         try {
           if (data?.getRoutine.formatted_moves) {
-            const newFormattedMoves = [...data.getRoutine.formatted_moves]
-            newFormattedMoves.splice(index, 2, [data.getRoutine.formatted_moves[index][0], data.getRoutine.formatted_moves[index + 1][0]])
+            const newFormattedMoves = cloneDeep(data.getRoutine.formatted_moves)
+
+            newFormattedMoves[index].moves = [...newFormattedMoves[index].moves, ...newFormattedMoves[index + 1].moves]
+            newFormattedMoves.splice(index + 1, 1)
+
             await updateRoutine({ variables: { routineId: data.getRoutine.id, updatedRoutine: { formatted_moves: newFormattedMoves } } })
+            refetch()
+          }
+        } catch (error) {
+          console.error(error)
+        }
+      }}
+      onReorder={async (formattedMoves: MoveInfo[]) => {
+        console.log("formattedMoves", formattedMoves)
+        try {
+          if (data?.getRoutine.id) {
+            const formattedMovesUpdatedOrder = formattedMoves.map((moves) => {
+              const moveIds = moves.moves.map((move) => move.id)
+              return { id: moves.id, moves: moveIds }
+            })
+            await updateRoutine({
+              variables: { routineId: data.getRoutine.id, updatedRoutine: { formatted_moves: formattedMovesUpdatedOrder } },
+              optimisticResponse: {
+                updateRoutine: {
+                  id: data.getRoutine.id,
+                  formatted_moves: formattedMovesUpdatedOrder
+                }
+              }
+            })
             refetch()
           }
         } catch (error) {

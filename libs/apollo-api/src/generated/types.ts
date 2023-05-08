@@ -92,6 +92,17 @@ export enum Fig {
   FigWomens = 'figWomens'
 }
 
+export type FormattedMovesInput = {
+  id: Scalars['String'];
+  moves: Array<Scalars['String']>;
+};
+
+export type FormattedMovesType = {
+  __typename?: 'FormattedMovesType';
+  id: Scalars['String'];
+  moves: Array<Scalars['String']>;
+};
+
 export type Move = {
   __typename?: 'Move';
   apparatus: Apparatus;
@@ -203,7 +214,7 @@ export type QueryGetRoutineArgs = {
 
 export type SavedRoutine = {
   __typename?: 'SavedRoutine';
-  formatted_moves: Array<Array<Scalars['String']>>;
+  formatted_moves: Array<FormattedMovesType>;
   id: Scalars['String'];
   moves: Array<Move>;
   name: Scalars['String'];
@@ -211,7 +222,7 @@ export type SavedRoutine = {
 };
 
 export type UpdateRoutineInput = {
-  formatted_moves?: InputMaybe<Array<Array<Scalars['String']>>>;
+  formatted_moves?: InputMaybe<Array<FormattedMovesInput>>;
   name?: InputMaybe<Scalars['String']>;
 };
 
@@ -255,7 +266,7 @@ export type GetRoutineQueryVariables = Exact<{
 }>;
 
 
-export type GetRoutineQuery = { __typename?: 'Query', getRoutine: { __typename?: 'SavedRoutine', id: string, name: string, formatted_moves: Array<Array<string>>, moves: Array<{ __typename?: 'Move', id: string, namedAfter?: string | null, letterValue: string, description: string, pointValue: number }> } };
+export type GetRoutineQuery = { __typename?: 'Query', getRoutine: { __typename?: 'SavedRoutine', id: string, name: string, moves: Array<{ __typename?: 'Move', id: string, namedAfter?: string | null, letterValue: string, description: string, pointValue: number }>, formatted_moves: Array<{ __typename?: 'FormattedMovesType', id: string, moves: Array<string> }> } };
 
 export type UpdateRoutineMutationVariables = Exact<{
   routineId: Scalars['String'];
@@ -263,7 +274,7 @@ export type UpdateRoutineMutationVariables = Exact<{
 }>;
 
 
-export type UpdateRoutineMutation = { __typename?: 'Mutation', updateRoutine: { __typename?: 'SavedRoutine', id: string } };
+export type UpdateRoutineMutation = { __typename?: 'Mutation', updateRoutine: { __typename?: 'SavedRoutine', id: string, formatted_moves: Array<{ __typename?: 'FormattedMovesType', id: string, moves: Array<string> }> } };
 
 export type LoginMutationVariables = Exact<{
   email: Scalars['String'];
@@ -381,7 +392,10 @@ export const GetRoutineDocument = gql`
       description
       pointValue
     }
-    formatted_moves
+    formatted_moves {
+      id
+      moves
+    }
   }
 }
     `;
@@ -417,6 +431,10 @@ export const UpdateRoutineDocument = gql`
     mutation updateRoutine($routineId: String!, $updatedRoutine: UpdateRoutineInput!) {
   updateRoutine(routineId: $routineId, updatedRoutine: $updatedRoutine) {
     id
+    formatted_moves {
+      id
+      moves
+    }
   }
 }
     `;
