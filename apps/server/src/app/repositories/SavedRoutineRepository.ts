@@ -30,9 +30,9 @@ export class SavedRoutineRepository extends AbstractRepository<SavedRoutine> {
       const newMoves = uniq(extractedMoves.flat())
 
       const moveRepo = getCustomRepository(MoveRepository)
-      const moves = moveRepo.findManyByIds(newMoves)
+      const moves = await moveRepo.findManyByIds(newMoves)
 
-      routine.moves = moves
+      routine.moves = Promise.resolve(moves)
       routine.formatted_moves = updatedRoutine.formatted_moves
     }
 

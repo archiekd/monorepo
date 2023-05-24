@@ -2,5 +2,25 @@
   "typescript.tsdk": "node_modules/typescript/lib",
   "cSpell.words": [
     "hookform"
-  ]
+  ],
+  "peacock.color": "#2cbdd3",
+  "workbench.colorCustomizations": {
+    "activityBar.activeBackground": "#56cadc",
+    "activityBar.background": "#56cadc",
+    "activityBar.foreground": "#15202b",
+    "activityBar.inactiveForeground": "#15202b99",
+    "activityBarBadge.background": "#d32cbd",
+    "activityBarBadge.foreground": "#e7e7e7",
+    "commandCenter.border": "#15202b99",
+    "sash.hoverBorder": "#56cadc",
+    "statusBar.background": "#2cbdd3",
+    "statusBar.foreground": "#15202b",
+    "statusBarItem.hoverBackground": "#2397a9",
+    "statusBarItem.remoteBackground": "#2cbdd3",
+    "statusBarItem.remoteForeground": "#15202b",
+    "titleBar.activeBackground": "#2cbdd3",
+    "titleBar.activeForeground": "#15202b",
+    "titleBar.inactiveBackground": "#2cbdd399",
+    "titleBar.inactiveForeground": "#15202b99"
+  }
 }

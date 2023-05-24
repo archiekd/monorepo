@@ -90,7 +90,6 @@ export const EditRoutineController = ({ routineId, apparatusName }: Props) => {
       }}
       routine={routine}
       onLinkSelect={async (index) => {
-        console.log("index", index)
         try {
           if (data?.getRoutine.formatted_moves) {
             const newFormattedMoves = cloneDeep(data.getRoutine.formatted_moves)
@@ -117,12 +116,12 @@ export const EditRoutineController = ({ routineId, apparatusName }: Props) => {
               variables: { routineId: data.getRoutine.id, updatedRoutine: { formatted_moves: formattedMovesUpdatedOrder } },
               optimisticResponse: {
                 updateRoutine: {
+                  __typename: "SavedRoutine",
                   id: data.getRoutine.id,
                   formatted_moves: formattedMovesUpdatedOrder
                 }
               }
             })
-            refetch()
           }
         } catch (error) {
           console.error(error)

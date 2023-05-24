@@ -10,7 +10,7 @@ type CreateRoutineFormProps = {
   startValue: StartValueBoxProps
   routine: MoveInfo[]
   onLinkSelect?: (index: number) => void
-  onReorder?: (routine: any) => void
+  onReorder?: (routine: MoveInfo[]) => void
 }
 
 export const CreateRoutineForm: React.FC<CreateRoutineFormProps> = ({ addMove, title, startValue, routine, onLinkSelect, onReorder }) => {

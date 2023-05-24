@@ -1,4 +1,4 @@
-import { Field, InputType } from "type-graphql"
+import { Field, InputType, Int, ObjectType } from "type-graphql"
 
 import { Move } from "../../models/Move"
 
@@ -30,4 +30,22 @@ export class UpdateRoutineInput {
 
   @Field(() => [FormattedMovesInput], { nullable: true })
   formatted_moves?: FormattedMovesInput[]
+}
+
+@ObjectType()
+export class StartValueResponse {
+  @Field(() => Int)
+  eScore: number
+
+  @Field(() => Int)
+  moveTotal: number
+
+  @Field(() => Int)
+  requirements: number
+
+  @Field(() => Int)
+  connections: number
+
+  @Field(() => Int)
+  total: number
 }

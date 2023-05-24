@@ -1,11 +1,24 @@
 import { useMemo, useState } from "react"
 
-import { Active, closestCenter, DndContext, KeyboardSensor, PointerSensor, useSensor, useSensors } from "@dnd-kit/core"
+import {
+  Active,
+  closestCenter,
+  defaultDropAnimationSideEffects,
+  DndContext,
+  DragOverlay,
+  DropAnimation,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors
+} from "@dnd-kit/core"
 import { arrayMove, SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy } from "@dnd-kit/sortable"
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline"
 import LinkIcon from "@mui/icons-material/Link"
-import { Box, IconButton, useTheme } from "@mui/material"
+import { Box, IconButton, Stack, useTheme } from "@mui/material"
 
+import { ConnectionRoutineMove } from "./ConnectionRoutineMove"
+import { RoutineMove } from "./RoutineMove"
 import { SortableMoveItem } from "./SortableMoveItem"
 
 export type SingleMoveInfo = {
@@ -24,7 +37,17 @@ type Props = {
   routine: MoveInfo[]
   addMove: () => void
   onLinkSelect?: (index: number) => void
-  onReorder?: (routine: any) => void
+  onReorder?: (routine: MoveInfo[]) => void
+}
+
+const dropAnimationConfig: DropAnimation = {
+  sideEffects: defaultDropAnimationSideEffects({
+    styles: {
+      active: {
+        opacity: "0.4"
+      }
+    }
+  })
 }
 
 export const CreateRoutine = ({ routine, addMove, onLinkSelect, onReorder }: Props) => {
@@ -68,21 +91,15 @@ export const CreateRoutine = ({ routine, addMove, onLinkSelect, onReorder }: Pro
                 !lastMove && routine[index].moves.length === 1 && index + 1 < routine.length && routine[index + 1].moves.length === 1
 
               return (
-                <>
-                  <SortableMoveItem key={id} id={id} moves={moves} onLinkSelect={onLinkSelect} />
-                  {shouldShowLinkIcon ? (
-                    <Box width="100%" display="flex" justifyContent="center">
-                      <IconButton onClick={() => onLinkSelect?.(index)}>
-                        <LinkIcon sx={{ transform: "rotate(90deg)" }} />
-                      </IconButton>
-                    </Box>
-                  ) : (
-                    <Box height="20px" />
-                  )}
-                </>
+                <SortableMoveItem key={id} id={id} moves={moves} shouldShowLinkIcon={shouldShowLinkIcon} index={index} onLinkSelect={onLinkSelect} />
               )
             })}
           </SortableContext>
+          <DragOverlay dropAnimation={dropAnimationConfig}>
+            {activeItem ? (
+              <SortableMoveItem key={activeItem.id} id={activeItem.id} moves={activeItem.moves} shouldShowLinkIcon={false} index={1} />
+            ) : null}
+          </DragOverlay>
         </DndContext>
       </Box>
       <Box display="flex" justifyContent="center" alignItems="center" height="15%">

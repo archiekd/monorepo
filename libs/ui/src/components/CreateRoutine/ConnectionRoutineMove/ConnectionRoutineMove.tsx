@@ -24,9 +24,6 @@ export const ConnectionRoutineMove = ({ moves, id }: Props) => {
       display="flex"
       alignItems="center"
       padding="5px"
-      ref={setNodeRef}
-      {...attributes}
-      {...listeners}
     >
       <Box display="flex" justifyContent="center" alignItems="center" height="100%" width="90%">
         <Stack direction="column" spacing={2}>
@@ -35,7 +32,21 @@ export const ConnectionRoutineMove = ({ moves, id }: Props) => {
           ))}
         </Stack>
       </Box>
-      <Box display="flex" justifyContent="flex-end" alignItems="center" height="100%" width="10%">
+      <Box
+        display="flex"
+        justifyContent="flex-end"
+        alignItems="center"
+        height="100%"
+        width="10%"
+        ref={setNodeRef}
+        {...attributes}
+        {...listeners}
+        sx={{
+          ":hover": {
+            cursor: "grab"
+          }
+        }}
+      >
         <DragIndicatorIcon />
       </Box>
     </Box>

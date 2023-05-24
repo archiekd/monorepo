@@ -31,7 +31,7 @@ type Props = {
   routine: MoveInfo[]
   apparatusName: string
   onLinkSelect?: (index: number) => void
-  onReorder?: (routine: any) => void
+  onReorder?: (routine: MoveInfo[]) => void
 }
 
 export const RoutinePageController = ({ onSelect, routine = [], apparatusName, onLinkSelect, onReorder }: Props) => {

@@ -17,16 +17,7 @@ export const RoutineMove = ({ move, id }: Props) => {
   })
 
   return (
-    <Box
-      border={`2px solid ${theme.palette.primary.dark}`}
-      height="50px"
-      width="400px"
-      borderRadius="5px"
-      display="flex"
-      ref={setNodeRef}
-      {...attributes}
-      {...listeners}
-    >
+    <Box border={`2px solid ${theme.palette.primary.dark}`} height="50px" width="400px" borderRadius="5px" display="flex">
       <Box
         display="flex"
         justifyContent="center"
@@ -44,7 +35,18 @@ export const RoutineMove = ({ move, id }: Props) => {
         <UiTypography size="lg">
           {move.description} - {move.pointValue}
         </UiTypography>
-        <DragIndicatorIcon color="inherit" />
+        <Box
+          ref={setNodeRef}
+          {...attributes}
+          {...listeners}
+          sx={{
+            ":hover": {
+              cursor: "grab"
+            }
+          }}
+        >
+          <DragIndicatorIcon color="inherit" />
+        </Box>
       </Box>
     </Box>
   )
