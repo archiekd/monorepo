@@ -29,11 +29,11 @@ export const MoveListDrawer: React.FC<MoveListDrawerProps> = ({ isOpen, onClose,
       <Stack direction="column" spacing={3}>
         <UiTypography>Move List</UiTypography>
         <SearchInput searchIcon onChange={(event) => onSearch(event.target.value)} />
-        <Box display="flex" flexDirection="column" alignItems="flex-start">
+        <Stack alignItems="flex-start" gap={2}>
           {moves.map((move) => {
             return <MoveCard key={move.id} {...move} onSelect={onSelect} />
           })}
-        </Box>
+        </Stack>
       </Stack>
     </Drawer>
   )
