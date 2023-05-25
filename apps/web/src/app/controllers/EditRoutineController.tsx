@@ -22,6 +22,15 @@ gql`
         description
         pointValue
       }
+      getStartValue {
+        eScore
+        dScore {
+          moveTotal
+          requirements
+          connections
+        }
+        total
+      }
       formatted_moves {
         id
         moves
@@ -73,6 +82,7 @@ export const EditRoutineController = ({ routineId, apparatusName }: Props) => {
   return (
     <RoutinePageController
       apparatusName={apparatusName}
+      startValue={data?.getRoutine.getStartValue}
       onSelect={async (move) => {
         try {
           if (data?.getRoutine.id) {

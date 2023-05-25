@@ -36,4 +36,6 @@ export const entitiesAndMigrations = {
 // eslint-disable-next-line @typescript-eslint/ban-types
 const resolvers = importAllFunctions(require.context("./app/modules", true, /\.resolver\.ts$/))
 
-export const resolversViaWebpack = { resolvers }
+const fieldResolvers = importAllFunctions(require.context("./app/modules", true, /\.fieldResolver\.ts$/))
+
+export const resolversViaWebpack = { resolvers: [...resolvers, ...fieldResolvers] }

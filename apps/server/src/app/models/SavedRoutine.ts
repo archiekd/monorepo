@@ -1,8 +1,9 @@
 import { Field, ObjectType } from "type-graphql"
 import { TypeormLoader } from "type-graphql-dataloader"
-import { Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm"
+import { Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm"
 
 import { BaseModel } from "../core/BaseModel"
+import { Apparatus } from "./Apparatus"
 import { Move } from "./Move"
 import { User } from "./User"
 
@@ -16,6 +17,11 @@ export class SavedRoutine extends BaseModel {
   @Field(() => String)
   @Column("varchar")
   name: string
+
+  @TypeormLoader()
+  @Field(() => Apparatus)
+  @ManyToOne(() => Apparatus, (apparatus) => apparatus.savedRoutines)
+  apparatus: Promise<Apparatus>
 
   @TypeormLoader()
   @Field(() => [Move])

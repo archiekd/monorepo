@@ -7,6 +7,7 @@ import { ApparatusDeduction } from "./ApparatusDeduction"
 import { CodeOfPoints } from "./CodeOfPoints"
 import { CodeOfPointsGroup } from "./CodeOfPointsGroup"
 import { Move } from "./Move"
+import { SavedRoutine } from "./SavedRoutine"
 import { User } from "./User"
 
 export enum ApparatusName {
@@ -51,6 +52,11 @@ export class Apparatus extends BaseModel {
   @Field(() => [Move])
   @OneToMany(() => Move, (move) => move.apparatus)
   moves: Promise<Move[]>
+
+  @TypeormLoader()
+  @Field(() => [SavedRoutine])
+  @OneToMany(() => SavedRoutine, (routine) => routine.apparatus)
+  savedRoutines: Promise<SavedRoutine[]>
 
   @TypeormLoader()
   @Field(() => CodeOfPointsGroup)

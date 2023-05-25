@@ -1,4 +1,4 @@
-import { Field, InputType, Int, ObjectType } from "type-graphql"
+import { Field, Float, InputType, ObjectType } from "type-graphql"
 
 import { Move } from "../../models/Move"
 
@@ -33,19 +33,25 @@ export class UpdateRoutineInput {
 }
 
 @ObjectType()
-export class StartValueResponse {
-  @Field(() => Int)
-  eScore: number
-
-  @Field(() => Int)
+export class DScoreResponse {
+  @Field(() => Float)
   moveTotal: number
 
-  @Field(() => Int)
+  @Field(() => Float)
   requirements: number
 
-  @Field(() => Int)
+  @Field(() => Float)
   connections: number
+}
 
-  @Field(() => Int)
+@ObjectType()
+export class StartValueResponse {
+  @Field(() => Float)
+  eScore: number
+
+  @Field(() => DScoreResponse)
+  dScore: DScoreResponse
+
+  @Field(() => Float)
   total: number
 }

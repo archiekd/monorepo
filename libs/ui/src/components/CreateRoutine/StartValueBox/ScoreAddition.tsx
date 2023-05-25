@@ -6,7 +6,7 @@ import { UiTypography } from "../../ui"
 import { displayNumWith1Decimal } from "./helper"
 
 type ScoreAdditionProps = {
-  score: number | null
+  score?: number | null
   label: string
   color: string
 }
