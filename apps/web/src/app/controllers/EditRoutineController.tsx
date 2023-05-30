@@ -80,6 +80,7 @@ export const EditRoutineController = ({ routineId, apparatusName }: Props) => {
 
   if (loading) return <CircularProgress />
 
+  console.log("data?.getRoutine.getStartValue", data?.getRoutine.getStartValue)
   return (
     <RoutinePageController
       apparatusName={apparatusName}
@@ -153,12 +154,12 @@ export const EditRoutineController = ({ routineId, apparatusName }: Props) => {
 
             console.log("newFormattedMoves", newFormattedMoves)
 
+            const group = newFormattedMoves[index]
+            if (!group) return
             const replacementMoves = [
-              { id: uuid4(), moves: [newFormattedMoves[index]?.moves[0]] },
-              { id: uuid4(), moves: [newFormattedMoves[index]?.moves[1]] }
+              { id: uuid4(), moves: [group.moves[0]] },
+              { id: uuid4(), moves: [group.moves[1]] }
             ]
-
-            console.log("newFormattedMoves, replacementMoves", newFormattedMoves, replacementMoves)
 
             newFormattedMoves.splice(index, 1, ...replacementMoves)
 
