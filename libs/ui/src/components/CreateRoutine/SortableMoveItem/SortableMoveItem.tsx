@@ -12,10 +12,11 @@ type Props = {
   moves: SingleMoveInfo[]
   shouldShowLinkIcon: boolean
   onLinkSelect?: (index: number) => void
+  onUnlinkSelect?: (index: number) => void
   index: number
 }
 
-export const SortableMoveItem = ({ id, moves, shouldShowLinkIcon, onLinkSelect, index }: Props) => {
+export const SortableMoveItem = ({ id, moves, shouldShowLinkIcon, onLinkSelect, index, onUnlinkSelect }: Props) => {
   const { setNodeRef, transform, transition, isDragging } = useSortable({ id })
 
   const style = {
@@ -27,7 +28,7 @@ export const SortableMoveItem = ({ id, moves, shouldShowLinkIcon, onLinkSelect, 
     <Box ref={setNodeRef} style={{ ...style, opacity: isDragging ? 0.4 : 1 }}>
       {moves.length > 1 ? (
         <Box width="100%" display="flex" justifyContent="center">
-          <ConnectionRoutineMove moves={moves} id={id} />
+          <ConnectionRoutineMove moves={moves} id={id} onUnlinkSelect={onUnlinkSelect} />
         </Box>
       ) : (
         <Box width="100%" display="flex" justifyContent="center">
