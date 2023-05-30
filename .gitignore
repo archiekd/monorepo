@@ -39,3 +39,4 @@ testem.log
 Thumbs.db
 
 libs/apollo-api/src/generated/*
+apps/server/src/generated/*
