@@ -14,11 +14,9 @@ import {
 } from "@dnd-kit/core"
 import { arrayMove, SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy } from "@dnd-kit/sortable"
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline"
-import LinkIcon from "@mui/icons-material/Link"
-import { Box, IconButton, Stack, useTheme } from "@mui/material"
+import { Box, IconButton, useTheme } from "@mui/material"
 
-import { ConnectionRoutineMove } from "./ConnectionRoutineMove"
-import { RoutineMove } from "./RoutineMove"
+import { UiTextField } from "../ui/TextField"
 import { SortableMoveItem } from "./SortableMoveItem"
 
 export type SingleMoveInfo = {
@@ -38,6 +36,7 @@ type Props = {
   addMove: () => void
   onLinkSelect?: (index: number) => void
   onReorder?: (routine: MoveInfo[]) => void
+  routineName?: string
 }
 
 const dropAnimationConfig: DropAnimation = {
@@ -50,7 +49,7 @@ const dropAnimationConfig: DropAnimation = {
   })
 }
 
-export const CreateRoutine = ({ routine, addMove, onLinkSelect, onReorder }: Props) => {
+export const CreateRoutine = ({ routine, addMove, onLinkSelect, onReorder, routineName }: Props) => {
   const [active, setActive] = useState<Active | null>(null)
 
   const theme = useTheme()
@@ -64,7 +63,10 @@ export const CreateRoutine = ({ routine, addMove, onLinkSelect, onReorder }: Pro
 
   return (
     <Box sx={{ background: theme.palette.grey[100] }} height="70vh" width="40vw" display="flex" flexDirection="column" box-shadow={theme.shadows[11]}>
-      <Box height="85%" padding="20px" overflow="scroll">
+      <Box height="10%" display="flex" justifyContent="center" alignItems="center">
+        <UiTextField value={routineName} placeholder="Enter routine name" />
+      </Box>
+      <Box height="80%" padding="20px" overflow="scroll">
         <DndContext
           sensors={sensors}
           onDragStart={({ active }) => {
@@ -102,7 +104,7 @@ export const CreateRoutine = ({ routine, addMove, onLinkSelect, onReorder }: Pro
           </DragOverlay>
         </DndContext>
       </Box>
-      <Box display="flex" justifyContent="center" alignItems="center" height="15%">
+      <Box display="flex" justifyContent="center" alignItems="center" height="10%">
         <IconButton aria-label="delete" size="small" onClick={addMove}>
           <AddCircleOutlineIcon />
         </IconButton>

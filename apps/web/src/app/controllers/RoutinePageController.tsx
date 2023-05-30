@@ -16,16 +16,6 @@ gql`
   }
 `
 
-// const startValue = {
-//   eScore: 10,
-//   dScore: {
-//     movesScore: 2.3,
-//     requirements: 2.5,
-//     connections: 0.1
-//   },
-//   totalStart: 14.9
-// }
-
 export type StartValue = {
   eScore: number
   dScore: {
@@ -43,9 +33,10 @@ type Props = {
   onLinkSelect?: (index: number) => void
   onReorder?: (routine: MoveInfo[]) => void
   startValue?: StartValueBoxProps
+  routineName?: string
 }
 
-export const RoutinePageController = ({ onSelect, routine = [], apparatusName, onLinkSelect, onReorder, startValue }: Props) => {
+export const RoutinePageController = ({ onSelect, routine = [], apparatusName, onLinkSelect, onReorder, startValue, routineName }: Props) => {
   const { onOpen, onClose, isOpen } = useActionsState()
 
   const [getMoves, { data, loading }] = useGetApparatusMovesLazyQuery()
@@ -65,6 +56,7 @@ export const RoutinePageController = ({ onSelect, routine = [], apparatusName, o
         routine={routine}
         onLinkSelect={onLinkSelect}
         onReorder={onReorder}
+        routineName={routineName}
       />
       <MoveListDrawer
         isOpen={isOpen}

@@ -31,7 +31,7 @@ export const SortableMoveItem = ({ id, moves, shouldShowLinkIcon, onLinkSelect, 
         </Box>
       ) : (
         <Box width="100%" display="flex" justifyContent="center">
-          <RoutineMove move={moves[0]} id={id} />
+          {moves[0] && <RoutineMove move={moves[0]} id={id} />}
         </Box>
       )}
       {shouldShowLinkIcon && !isDragging ? (

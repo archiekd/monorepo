@@ -1,6 +1,6 @@
 import { useSortable } from "@dnd-kit/sortable"
 import DragIndicatorIcon from "@mui/icons-material/DragIndicator"
-import { Box, useTheme } from "@mui/material"
+import { Box, IconButton, useTheme } from "@mui/material"
 
 import { UiTypography } from "../../ui"
 import { SingleMoveInfo } from "../CreateRoutine"
@@ -35,18 +35,9 @@ export const RoutineMove = ({ move, id }: Props) => {
         <UiTypography size="lg">
           {move.description} - {move.pointValue}
         </UiTypography>
-        <Box
-          ref={setNodeRef}
-          {...attributes}
-          {...listeners}
-          sx={{
-            ":hover": {
-              cursor: "grab"
-            }
-          }}
-        >
+        <IconButton ref={setNodeRef} {...attributes} {...listeners}>
           <DragIndicatorIcon color="inherit" />
-        </Box>
+        </IconButton>
       </Box>
     </Box>
   )

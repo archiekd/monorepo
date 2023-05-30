@@ -15,7 +15,7 @@ export type StartValueBoxProps =
         connections: number
         moveTotal: number
       }
-      totalStart?: number
+      total?: number
     }
   | undefined
 
@@ -40,7 +40,7 @@ export const StartValueBox = (props: StartValueBoxProps) => {
           Total Start:
         </UiTypography>
         <UiTypography fontWeight={900} color="white">
-          {displayNumWith1Decimal(props?.totalStart)}
+          {displayNumWith1Decimal(props?.total)}
         </UiTypography>
       </Box>
     </StartValueWrapper>

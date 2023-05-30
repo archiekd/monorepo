@@ -83,6 +83,7 @@ export const EditRoutineController = ({ routineId, apparatusName }: Props) => {
     <RoutinePageController
       apparatusName={apparatusName}
       startValue={data?.getRoutine.getStartValue}
+      routineName={data?.getRoutine.name}
       onSelect={async (move) => {
         try {
           if (data?.getRoutine.id) {
@@ -115,7 +116,6 @@ export const EditRoutineController = ({ routineId, apparatusName }: Props) => {
         }
       }}
       onReorder={async (formattedMoves: MoveInfo[]) => {
-        console.log("formattedMoves", formattedMoves)
         try {
           if (data?.getRoutine.id) {
             const formattedMovesUpdatedOrder = formattedMoves.map((moves) => {
@@ -137,6 +137,9 @@ export const EditRoutineController = ({ routineId, apparatusName }: Props) => {
           console.error(error)
         }
       }}
+      // onChangeName={async(name: string) => {
+
+      // }}
     />
   )
 }

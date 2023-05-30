@@ -1,6 +1,6 @@
 import { useSortable } from "@dnd-kit/sortable"
 import DragIndicatorIcon from "@mui/icons-material/DragIndicator"
-import { Box, Stack, useTheme } from "@mui/material"
+import { Box, IconButton, Stack, useTheme } from "@mui/material"
 
 import { SingleMoveInfo } from "../CreateRoutine"
 import { SingleMove } from "./SingleMove"
@@ -32,23 +32,9 @@ export const ConnectionRoutineMove = ({ moves, id }: Props) => {
           ))}
         </Stack>
       </Box>
-      <Box
-        display="flex"
-        justifyContent="flex-end"
-        alignItems="center"
-        height="100%"
-        width="10%"
-        ref={setNodeRef}
-        {...attributes}
-        {...listeners}
-        sx={{
-          ":hover": {
-            cursor: "grab"
-          }
-        }}
-      >
+      <IconButton ref={setNodeRef} {...attributes} {...listeners}>
         <DragIndicatorIcon />
-      </Box>
+      </IconButton>
     </Box>
   )
 }

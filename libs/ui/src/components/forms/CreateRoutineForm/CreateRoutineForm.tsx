@@ -7,16 +7,25 @@ import { UiTypography } from "../../ui"
 type CreateRoutineFormProps = {
   addMove: () => void
   title: string
-  startValue: StartValueBoxProps
+  startValue?: StartValueBoxProps
   routine: MoveInfo[]
   onLinkSelect?: (index: number) => void
   onReorder?: (routine: MoveInfo[]) => void
+  routineName?: string
 }
 
-export const CreateRoutineForm: React.FC<CreateRoutineFormProps> = ({ addMove, title, startValue, routine, onLinkSelect, onReorder }) => {
+export const CreateRoutineForm: React.FC<CreateRoutineFormProps> = ({
+  addMove,
+  title,
+  startValue,
+  routine,
+  onLinkSelect,
+  onReorder,
+  routineName
+}) => {
   return (
     <Box display="flex" justifyContent="space-evenly" height="100%" alignItems="center">
-      <CreateRoutine addMove={addMove} routine={routine} onLinkSelect={onLinkSelect} onReorder={onReorder} />
+      <CreateRoutine addMove={addMove} routine={routine} onLinkSelect={onLinkSelect} onReorder={onReorder} routineName={routineName} />
       <Box display="flex" flexDirection="column" justifyContent="space-evenly" height="70vh">
         <UiTypography fontWeight="900" size="5xl">
           {startCase(title)}
