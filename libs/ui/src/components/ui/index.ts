@@ -1,3 +1,5 @@
 export * from "./Button"
 export * from "./LoadingScreen"
 export * from "./Typography"
+export * from "./Property"
+export * from "./PropertyList"

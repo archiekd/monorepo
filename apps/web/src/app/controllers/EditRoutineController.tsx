@@ -109,8 +109,16 @@ export const EditRoutineController = ({ routineId, apparatusName }: Props) => {
             newFormattedMoves[index].moves = [...newFormattedMoves[index].moves, ...newFormattedMoves[index + 1].moves]
             newFormattedMoves.splice(index + 1, 1)
 
-            await updateRoutine({ variables: { routineId: data.getRoutine.id, updatedRoutine: { formatted_moves: newFormattedMoves } } })
-            refetch()
+            await updateRoutine({
+              variables: { routineId: data.getRoutine.id, updatedRoutine: { formatted_moves: newFormattedMoves } },
+              optimisticResponse: {
+                updateRoutine: {
+                  __typename: "SavedRoutine",
+                  id: data.getRoutine.id,
+                  formatted_moves: newFormattedMoves
+                }
+              }
+            })
           }
         } catch (error) {
           console.error(error)
