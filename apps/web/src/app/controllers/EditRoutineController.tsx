@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import { useMemo } from "react"
 
 import { gql } from "@apollo/client"
@@ -137,9 +138,38 @@ export const EditRoutineController = ({ routineId, apparatusName }: Props) => {
           console.error(error)
         }
       }}
-      // onChangeName={async(name: string) => {
+      onUnlinkSelect={async (index: number) => {
+        try {
+          if (data?.getRoutine.formatted_moves) {
+            const newFormattedMoves = cloneDeep(data.getRoutine.formatted_moves)
 
-      // }}
+            console.log("newFormattedMoves", newFormattedMoves)
+
+            const replacementMoves = [
+              { id: uuid4(), moves: [newFormattedMoves[index]?.moves[0]] },
+              { id: uuid4(), moves: [newFormattedMoves[index]?.moves[1]] }
+            ]
+
+            console.log("newFormattedMoves, replacementMoves", newFormattedMoves, replacementMoves)
+
+            newFormattedMoves.splice(index, 1, ...replacementMoves)
+
+            await updateRoutine({
+              variables: { routineId: data.getRoutine.id, updatedRoutine: { formatted_moves: newFormattedMoves } },
+              optimisticResponse: {
+                updateRoutine: {
+                  __typename: "SavedRoutine",
+                  id: data.getRoutine.id,
+                  formatted_moves: newFormattedMoves
+                }
+              }
+            })
+          }
+        } catch (error) {
+          console.error(error)
+        }
+      }}
+      // onChangeName={async(name: string) => { }}
     />
   )
 }

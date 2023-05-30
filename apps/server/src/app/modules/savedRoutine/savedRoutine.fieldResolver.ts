@@ -80,7 +80,7 @@ const calculateFloorStartValue = (formatted_moves: FormattedMovesType[], moves: 
     if (moves[0].pointValue() > 0.3 && moves[1].pointValue() > 0.3) connections += 0.2
   })
 
-  const total = eScore + elementTotal + requirmentsTotal
+  const total = eScore + elementTotal + requirmentsTotal + connections
 
   return { eScore, dScore: { moveTotal: elementTotal, requirements: requirmentsTotal, connections }, total }
 }

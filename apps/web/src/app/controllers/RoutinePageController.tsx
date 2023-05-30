@@ -31,12 +31,22 @@ type Props = {
   routine: MoveInfo[]
   apparatusName: string
   onLinkSelect?: (index: number) => void
+  onUnlinkSelect?: (index: number) => void
   onReorder?: (routine: MoveInfo[]) => void
   startValue?: StartValueBoxProps
   routineName?: string
 }
 
-export const RoutinePageController = ({ onSelect, routine = [], apparatusName, onLinkSelect, onReorder, startValue, routineName }: Props) => {
+export const RoutinePageController = ({
+  onSelect,
+  routine = [],
+  apparatusName,
+  onLinkSelect,
+  onReorder,
+  startValue,
+  routineName,
+  onUnlinkSelect
+}: Props) => {
   const { onOpen, onClose, isOpen } = useActionsState()
 
   const [getMoves, { data, loading }] = useGetApparatusMovesLazyQuery()
@@ -55,6 +65,7 @@ export const RoutinePageController = ({ onSelect, routine = [], apparatusName, o
         }}
         routine={routine}
         onLinkSelect={onLinkSelect}
+        onUnlinkSelect={onUnlinkSelect}
         onReorder={onReorder}
         routineName={routineName}
       />

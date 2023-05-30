@@ -35,6 +35,7 @@ type Props = {
   routine: MoveInfo[]
   addMove: () => void
   onLinkSelect?: (index: number) => void
+  onUnlinkSelect?: (index: number) => void
   onReorder?: (routine: MoveInfo[]) => void
   routineName?: string
 }
@@ -49,7 +50,7 @@ const dropAnimationConfig: DropAnimation = {
   })
 }
 
-export const CreateRoutine = ({ routine, addMove, onLinkSelect, onReorder, routineName }: Props) => {
+export const CreateRoutine = ({ routine, addMove, onLinkSelect, onReorder, routineName, onUnlinkSelect }: Props) => {
   const [active, setActive] = useState<Active | null>(null)
 
   const theme = useTheme()
@@ -93,7 +94,15 @@ export const CreateRoutine = ({ routine, addMove, onLinkSelect, onReorder, routi
                 !lastMove && routine[index].moves.length === 1 && index + 1 < routine.length && routine[index + 1].moves.length === 1
 
               return (
-                <SortableMoveItem key={id} id={id} moves={moves} shouldShowLinkIcon={shouldShowLinkIcon} index={index} onLinkSelect={onLinkSelect} />
+                <SortableMoveItem
+                  key={id}
+                  id={id}
+                  moves={moves}
+                  shouldShowLinkIcon={shouldShowLinkIcon}
+                  index={index}
+                  onLinkSelect={onLinkSelect}
+                  onUnlinkSelect={onUnlinkSelect}
+                />
               )
             })}
           </SortableContext>
