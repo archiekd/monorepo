@@ -14,7 +14,12 @@ type Props = {
 
 export const ConnectionRoutineMove = ({ moves, id, onUnlinkSelect }: Props) => {
   const theme = useTheme()
-  const { attributes, listeners, setNodeRef } = useSortable({
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    index: routineIndex
+  } = useSortable({
     id: id
   })
   return (
@@ -33,7 +38,7 @@ export const ConnectionRoutineMove = ({ moves, id, onUnlinkSelect }: Props) => {
             <>
               <SingleMove {...move} key={move.id} />
               {index === 0 && (
-                <IconButton onClick={() => onUnlinkSelect?.(index)} sx={{ margin: 0, padding: 0, width: "20px", alignSelf: "center" }}>
+                <IconButton onClick={() => onUnlinkSelect?.(routineIndex)} sx={{ margin: 0, padding: 0, width: "20px", alignSelf: "center" }}>
                   <LinkOffIcon sx={{ transform: "rotate(90deg)" }} />
                 </IconButton>
               )}
